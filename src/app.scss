@@ -29,7 +29,8 @@ h1, h2, h3, h4 {
 
 h1 {
 	@include typography-h1-expressive();
-	margin-bottom: 0.2em;
+	font-size: $textsize-xl;
+	margin-bottom: 0.5em;
 }
 
 .button {
@@ -69,6 +70,11 @@ h1 {
 	max-width: 100%;
 }
 
+.cs__section-title {
+	font-size: $textsize-s;
+	font-weight: 600;
+}
+
 .cs__search {
 	display: flex;
 	margin-bottom: $spacing-xxs;
@@ -84,7 +90,7 @@ h1 {
 	max-width: 100%;
 }
 
-.cs__facets {
+.cs__facet-wrapper {
 	display: flex;
 	grid-column-gap: $spacing-xxs;
 	grid-row-gap: $spacing-xxs;
@@ -97,4 +103,23 @@ h1 {
 	flex-basis: 40%;
 	flex-grow: 1;
 	flex-shrink: 0;
+}
+
+.cs__show-only {
+	margin-bottom: $spacing-xxs;
+}
+
+.cs__show-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	grid-column-gap: $spacing-xxs;
+	grid-row-gap: $spacing-micro;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.cs__show-option {
+	cursor: pointer;
+	white-space: nowrap;
 }

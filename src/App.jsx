@@ -18,22 +18,38 @@ const defaultParams = new URLSearchParams({
 const defaultParamString = defaultParams.toString();
 const defaultFacetObject = {id: "Facet","options":[]}
 
+const showOnlyOptions = [
+	{value: "highlights", name: "Highlights"},
+	{value: "withImage", name: "Artworks With Image"},
+	{value: "onDisplay", name: "Artworks on Display"},
+	{value: "openAccess", name: "Open Access"},
+	{value: "provenance", name: "Nazi-era provenance"},
+];
+
 const App = () => {
 	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
+
+	const [query, setQuery] = useState("");
+	const [searchField, setSearchField] = useState("");
+
 	const [results, setResults] = useState([]);
 	const [facets, setFacets] = useState([defaultFacetObject]);
 
 	const formatAndSetFacets = oldFacets => {
 		oldFacets.shift();
 		const newFacets = oldFacets.map(facet => {
-			const newOptions = facet.values.map(option => {
-				return  {
+			facet.selectedValues = [];
+			facet.options = [];
+			facet.values.forEach(option => {
+				const formattedOption = {
 					"selected": option.selected,
 					"label": `${option.label} (${option.count})`,
 					"value": option.id
-				}
+				};
+				option.selected && facet.selectedValues.push(formattedOption);
+				facet.options.push(formattedOption);
 			});
-			facet.values = newOptions;
+
 			return facet;
 		});
 		setFacets(newFacets);
@@ -43,8 +59,8 @@ const App = () => {
 		const request = await fetch(`${searchAPI}${searchParamsString}`);
 		const response = await request.json();
 		if (response.results) {
-			setResults(response.results);
-			formatAndSetFacets(response.facets);
+			await setResults(response.results);
+			await formatAndSetFacets(response.facets);
 		} else {
 			console.log("No Results");
 		}
@@ -63,10 +79,17 @@ const App = () => {
 		setSearchParamsString(paramsObject.toString());
 	};
 
+	const setStateFromURLParams = params => {
+		setQuery(params.get("q") || "");
+		setSearchField(params.get("searchField") || "");
+	};
+
 	useEffect(() => {
 		const url = new URL(`${window.location}`);
 		const params = new URLSearchParams(url.search.slice(1));
 		setSearchParamsString(params.toString());
+
+		setStateFromURLParams(params);
 	}, []);
 
 	useEffect(() => {
@@ -82,24 +105,49 @@ const App = () => {
 		<main className="collection-search">
 			<h1>Search The Collection</h1>
 			<SearchBar
+				query={query}
+				selectedField={searchField}
 				onChange={handleSearchQueryChange}
 			/>
 			<section className="cs__facets">
-				{facets.map(facet => {
-					return (
-						<Select
-							className="cs__facet"
-							key={facet.id}
-							isMulti
-							isSearchable="true"
-							name={facet.id}
-							placeholder={facet.label}
-							onChange={e => handleFacetChange(e,facet)}
-							options={facet.values}
-						/>
-					);
-				})}
+				<span className="cs__section-title">Filter By:</span>
+				<div className="cs__facet-wrapper">
+					{facets.map(facet => {
+						return (
+							<Select
+								defaultValue={facet.selectedValues}
+								className="cs__facet"
+								key={facet.id}
+								isMulti
+								isSearchable="true"
+								name={facet.id}
+								placeholder={facet.label}
+								onChange={e => handleFacetChange(e,facet)}
+								options={facet.options}
+							/>
+						);
+					})}
+				</div>
 			</section>
+
+			<section className="cs__show-only">
+				<span className="cs__section-title">Show Only:</span>
+				<ul className="cs__show-wrapper">
+					{showOnlyOptions.map(option => {
+						return (
+							<li key={option.value} className="cs__show-option">
+								<input
+									type="checkbox"
+									id={option.value}/>
+								<label htmlFor={option.value}>
+									{option.name}
+								</label>
+							</li>
+						)
+					})}
+				</ul>
+			</section>
+
 			<section className="cs__results">
 				{results.map(collectionItem => {
 					return (
