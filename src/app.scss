@@ -83,3 +83,18 @@ h1 {
 	flex-wrap: wrap;
 	max-width: 100%;
 }
+
+.cs__facets {
+	display: flex;
+	grid-column-gap: $spacing-xxs;
+	grid-row-gap: $spacing-xxs;
+	flex-wrap: wrap;
+	margin-bottom: $spacing-xxs;
+}
+
+.cs__facet {
+	font-size: $textsize-xxs;
+	flex-basis: 40%;
+	flex-grow: 1;
+	flex-shrink: 0;
+}
