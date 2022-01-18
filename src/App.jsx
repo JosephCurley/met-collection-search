@@ -32,6 +32,7 @@ const App = () => {
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
 	const [showOnly, setShowOnly] = useState({});
+	const [perPage, setPerPage] = useState("20");
 
 	const [results, setResults] = useState([]);
 	const [facets, setFacets] = useState([defaultFacetObject]);
@@ -73,6 +74,13 @@ const App = () => {
 		setSearchParamsString(paramsObject.toString());
 	};
 
+	const handlePerPageChange = event => {
+		const paramsObject = new URLSearchParams(searchParamsString);
+		paramsObject.set("perPage", event.target.value);
+		setSearchParamsString(paramsObject.toString());
+		setPerPage(event.target.value);
+	};
+
 	const handleFacetChange= (e, facet) => {
 		const paramsObject = new URLSearchParams(searchParamsString);
 		const newValue = e.map(selectedFacet => selectedFacet.value).join("|")
@@ -102,9 +110,9 @@ const App = () => {
 	const setStateFromURLParams = params => {
 		setQuery(params.get("q") || "");
 		setSearchField(params.get("searchField") || "");
+		setPerPage(params.get("perPage") || "20");
 
 		if (params.get("showOnly")) {
-			console.log(params.get("showOnly").split("|"));
 			const showOnlyObj = params.get("showOnly").split("|").reduce((o, key) => ({ ...o, [key]: true}), {})
 			setShowOnly(showOnlyObj);
 		}
@@ -185,7 +193,23 @@ const App = () => {
 					);
 				})}
 			</section>
-			<section className="pagination">
+			<section className="cs__pagination">
+				<div className="cs__rpp">
+					<span>Results per page:</span>
+					{["20","40","60"].map(value => {
+						return (
+							<button
+								disabled={perPage === value}
+								value={value}
+								onKeyDown={event => event.key === 'Enter' && handlePerPageChange(event)}
+								onClick={event => handlePerPageChange(event)}
+								key={value}
+								className="rpp__option">
+								{value}
+							</button>
+						)
+					})}
+				</div>
 			</section>
 		</main>
 	)

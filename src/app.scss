@@ -90,6 +90,7 @@ h1 {
 	grid-row-gap: $spacing-xxs;
 	flex-wrap: wrap;
 	max-width: 100%;
+	min-height: 50vh;
 }
 
 .cs__facet-wrapper {
@@ -127,4 +128,28 @@ h1 {
 .cs__show-option {
 	cursor: pointer;
 	white-space: nowrap;
+}
+
+.hidden-input {
+	display: none;
+}
+
+.cs__rpp {
+	align-items: center;
+	display: flex;
+	font-weight: 600;
+	font-size: $textsize-s;
+	justify-content: center;
+	text-align: center;
+	grid-column-gap: $spacing-micro;
+}
+
+.rpp__option {
+	@include button-reset();
+	padding: $spacing-micro;
+	font-weight: 400;
+	font-size: $textsize-xs;
+	&[disabled] {
+		opacity: 0.5;
+	}
 }
