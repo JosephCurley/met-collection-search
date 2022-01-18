@@ -31,6 +31,7 @@ const App = () => {
 
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
+	const [showOnly, setShowOnly] = useState({});
 
 	const [results, setResults] = useState([]);
 	const [facets, setFacets] = useState([defaultFacetObject]);
@@ -79,9 +80,34 @@ const App = () => {
 		setSearchParamsString(paramsObject.toString());
 	};
 
+	const handleShowOnlyChange = event => {
+		const target = event.target;
+		const isChecked = target.type === 'checkbox' ? target.checked : target.value;
+		const name = target.name;
+		let newShowOnly = showOnly;
+
+		if (isChecked) {
+			newShowOnly[name] = true;
+		} else {
+			delete newShowOnly[name];
+		}
+
+		const showOnlyString = Object.keys(newShowOnly).join("|");
+		const paramsObject = new URLSearchParams(searchParamsString);
+
+		paramsObject.set("showOnly", showOnlyString);
+		setSearchParamsString(paramsObject.toString());
+	};
+
 	const setStateFromURLParams = params => {
 		setQuery(params.get("q") || "");
 		setSearchField(params.get("searchField") || "");
+
+		if (params.get("showOnly")) {
+			console.log(params.get("showOnly").split("|"));
+			const showOnlyObj = params.get("showOnly").split("|").reduce((o, key) => ({ ...o, [key]: true}), {})
+			setShowOnly(showOnlyObj);
+		}
 	};
 
 	useEffect(() => {
@@ -137,8 +163,12 @@ const App = () => {
 						return (
 							<li key={option.value} className="cs__show-option">
 								<input
+									checked={Object.keys(showOnly).includes(option.value)}
+									name={option.value}
+									onChange={handleShowOnlyChange}
 									type="checkbox"
-									id={option.value}/>
+									id={option.value}
+								/>
 								<label htmlFor={option.value}>
 									{option.name}
 								</label>
