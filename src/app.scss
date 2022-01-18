@@ -3,6 +3,8 @@
 @import "./fonts/font-declarations.scss";
 @import "./components/result-object/result-object";
 
+$bp-small-screen: 800px;
+
 * {
 	box-sizing: border-box;
 }
@@ -100,9 +102,12 @@ h1 {
 
 .cs__facet {
 	font-size: $textsize-xxs;
-	flex-basis: 40%;
+	flex-basis: 100%;
 	flex-grow: 1;
 	flex-shrink: 0;
+	@media (min-width: $bp-small-screen) {
+		flex-basis: 40%;
+	}
 }
 
 .cs__show-only {

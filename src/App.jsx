@@ -120,11 +120,8 @@ const App = () => {
 
 	useEffect(() => {
 		searchCollection();
-
 		const params = new URLSearchParams(searchParamsString);
-		params.set('version', 2.0);
 		window.history.replaceState({}, '', `${location.pathname}?${params}`);
-
 	}, [searchParamsString]);
 
 	return (

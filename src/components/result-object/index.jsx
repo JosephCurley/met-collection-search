@@ -5,8 +5,14 @@ const ResultObject = ({collectionItem}) => {
 	const imageURL = collectionItem.image.includes("metmuseum.org") ?
 		collectionItem.image :
 		`https://www.metmuseum.org${collectionItem.image}`;
+	const attributionString = collectionItem.artist || collectionItem.culture;
+	const attributionAndDate = attributionString ?
+		`${attributionString}, ${collectionItem.date}` :
+		collectionItem.date;
 	return (
-		<div className="result-object">
+		<a
+			href={collectionItem.url}
+			className="result-object">
 			<div className="result-object__image-container">
 				<img
 					className="result-object__image"
@@ -14,11 +20,14 @@ const ResultObject = ({collectionItem}) => {
 					alt={`Image of ${collectionItem.title}`}
 				/>
 			</div>
-			<h4
-				dangerouslySetInnerHTML={{__html: collectionItem.title}}
-				className="result-object__title"
-			/>
-		</div>
+			<div className="result-object__info">
+				<h4
+					dangerouslySetInnerHTML={{__html: collectionItem.title}}
+					className="result-object__title"
+				/>
+				<span>{attributionAndDate}</span>
+			</div>
+		</a>
 	)};
 
 ResultObject.propTypes = {
