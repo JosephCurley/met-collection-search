@@ -1,0 +1,77 @@
+@import "~@metmuseum/marble/src/base/base";
+@import "./fonts/font-declarations.scss";
+@import "./components/result-object/result-object";
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	@include typography-body-long();
+	-webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	color: inherit;
+	&:visited,
+	&:hover {
+		color: inherit;
+	}
+}
+
+h1, h2, h3, h4 {
+	margin: 0 0 0.5em;
+}
+
+h1 {
+	@include typography-h2();
+	margin: 0;
+}
+
+.button {
+	@include button-base();
+	height: 40px;
+	line-height: 0;
+	min-width: 100px;
+	white-space: nowrap;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 $spacing-xxs;
+}
+
+.button--primary{
+	@include primary-button();
+	@include primary-button--filled();
+}
+
+.button--ghost {
+	@include primary-button();
+	@include primary-button--ghost-dark();
+}
+
+.button--secondary {
+	@include secondary-button();
+	@include secondary-button--ghost-dark();
+}
+
+.button--tertiary {
+	@include tertiary-button();
+	align-self: center;
+}
+
+.cs__main {
+	max-width: 100%;
+}
+
+.cs__results {
+	display: flex;
+	grid-column-gap: $spacing-xxs;
+	grid-row-gap: $spacing-xxs;
+	flex-wrap: wrap;
+	margin: $spacing-xs $spacing-component-margin;
+	max-width: 100%;
+}

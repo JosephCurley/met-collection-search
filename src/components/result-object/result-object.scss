@@ -1,0 +1,33 @@
+@import "~@metmuseum/marble/src/base/base";
+
+$result-object-min-size: 240px;
+
+.result-object{
+	flex-basis: $result-object-min-size;
+	flex-grow: 1;
+}
+
+.result-object__image-container {
+	align-items: center;
+	display: flex;
+	height: 300px;
+	justify-content: center;
+	margin-bottom: $spacing-micro;
+	max-width: 100%;
+	position: relative;
+}
+
+.result-object__image {
+	position: absolute;
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.result-object__title {
+	@include line-clamp(2);
+	display: -webkit-box;
+	line-height: 1.1;
+	height: 2.2em;
+	overflow: hidden;
+	text-align: center;
+}
