@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import SearchBar from './components/search-bar';
 import ResultObject from './components/result-object';
 import './app.scss';
 
-// const url = new URL(`${window.location}`);
-// const params = new URLSearchParams(url.search.slice(1));
-
 const searchAPI = 'https://www.metmuseum.org/mothra/collectionlisting/search?';
 
-
-const defaultParams = {
+const defaultParams = new URLSearchParams({
 	"offset": 0,
 	"pageSize": 0,
 	"perPage": 20,
 	"searchField": "All",
 	"showOnly": null,
 	"sortBy": "Relevance"
-};
+});
+
+const defaultParamString = defaultParams.toString();
 
 const App = () => {
-	const [searchParams] = useState(defaultParams);
+	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
 	const [results, setResults] = useState([]);
 
 	const searchCollection = async () => {
-		const searchParamsObject = new URLSearchParams(searchParams);
-		const searchParamsString = searchParamsObject.toString();
 
 		const request = await fetch(`${searchAPI}${searchParamsString}`);
 		const response = await request.json();
@@ -35,15 +32,25 @@ const App = () => {
 		}
 	};
 
+	const handleSearchQueryChange = (param, event) => {
+		const paramsObject = new URLSearchParams(searchParamsString);
+		paramsObject.set(param, event.target.value);
+		setSearchParamsString(paramsObject.toString());
+	};
 
 	useEffect(() => {
 		searchCollection();
-	}, []);
-
+	}, [searchParamsString]);
 
 	return (
-		<main className="cs__main">
-			Hello World
+		<main className="collection-search">
+			<h1>Search The Collection</h1>
+			<SearchBar
+				onChange={handleSearchQueryChange}
+			/>
+			<section className="cs__facets">
+
+			</section>
 			<section className="cs__results">
 				{results.map(collectionItem => {
 					return (
@@ -53,6 +60,9 @@ const App = () => {
 						/>
 					);
 				})}
+			</section>
+			<section className="pagination">
+				TODO: add Pagination.
 			</section>
 		</main>
 	)
