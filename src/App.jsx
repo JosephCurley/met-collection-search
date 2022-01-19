@@ -18,6 +18,19 @@ const defaultParams = new URLSearchParams({
 
 const pageSizeOptions = [20,40,80];
 
+const sortByFields = [
+	{value: "Relevance", name: "Relevance"},
+	{value: "Title", name: "Title (a-z)"},
+	{value: "TitleDesc", name: "Title (z-a)"},
+	{value: "DateDesc", name: "Date (newest-oldest)"},
+	{value: "Date", name: "Date (oldest-newest)"},
+	{value: "ArtistMaker", name: "Artist/Maker (a-z)"},
+	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)"},
+	{value: "AccesionNumber", name: "Accession Number (0-9)"},
+	{value: "AccesionNumberDesc", name: "Accession Number (9-0)"}
+];
+
+
 const defaultParamString = defaultParams.toString();
 const defaultFacetObject = {id: "Facet","options":[]}
 
@@ -34,6 +47,7 @@ const App = () => {
 
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
+	const [sortBy, setSortBy] = useState("Relevance");
 	const [showOnly, setShowOnly] = useState({});
 	const [perPage, setPerPage] = useState(20);
 	const [offset, setOffset] = useState(0);
@@ -124,6 +138,7 @@ const App = () => {
 	const setStateFromURLParams = params => {
 		setQuery(params.get("q") || "");
 		setSearchField(params.get("searchField") || "");
+		setSortBy(params.get("sortBy") || "Relevance");
 		setPerPage(parseInt(params.get("perPage")) || 20);
 		setOffset(parseInt(params.get("offset")) || 0);
 		if (params.get("showOnly")) {
@@ -196,7 +211,25 @@ const App = () => {
 					})}
 				</ul>
 			</section>
-
+			<section className="cs__sort-results">
+				<span className="cs__section-title">Sort By:</span>
+				<div className="cs-select__wrapper">
+					<select
+						className="cs-select"
+						name="sort-by"
+						id="sort-by"
+						value={sortBy}
+						onChange={event => handleSearchQueryChange("sortBy", event)}>
+						{sortByFields.map(sortBy => {
+							return (
+								<option key={sortBy.value} value={sortBy.value}>
+									{sortBy.name}
+								</option>
+							)
+						})}
+					</select>
+				</div>
+			</section>
 			<section className="cs__results">
 				{results.map(collectionItem => {
 					return (

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
-import "./search-bar.scss";
 
 const searchFields = [
 	{value: "All", name: "All Fields"},
@@ -22,13 +21,13 @@ const SearchBar = ({onChange, query, selectedField}) => (
 			value={query}
 			onChange={event => onChange("q", event)}
 		/>
-		<div className="search-type__wrapper">
+		<div className="search-type__wrapper cs-select__wrapper">
 			<label
 				className="screen-reader-only"
 				htmlFor="search-type">Search Type:
 			</label>
 			<select
-				className="search-type"
+				className="search-type cs-select"
 				name="search-type"
 				id="search-type"
 				value={selectedField}
