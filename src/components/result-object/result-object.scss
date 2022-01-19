@@ -30,6 +30,9 @@ $result-object-min-size: 240px;
 
 .result-object__info {
 	text-align: center;
+	display: flex;
+	flex-direction: column;
+	grid-row-gap: $spacing-micro;
 }
 
 .result-object__title {
