@@ -85,7 +85,7 @@ const App = () => {
 
 	const searchCollection = async () => {
 		abortController.abort();
-		abortController = new AbortController()
+		abortController = new AbortController();
 		const request = await fetch(`${searchAPI}${searchParamsString}`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.results) {
@@ -240,16 +240,21 @@ const App = () => {
 					</select>
 				</div>
 			</section>
-			<section className="cs__results">
-				{results.map(collectionItem => {
-					return (
-						<ResultObject
-							key={collectionItem.accessionNumber}
-							collectionItem={collectionItem}
-						/>
-					);
-				})}
-			</section>
+			{results.length > 0 ? (
+				<section className="cs__results">
+					{results.map(collectionItem => {
+						return (
+							<ResultObject
+								key={collectionItem.accessionNumber}
+								collectionItem={collectionItem}
+							/>
+						);
+					})}
+				</section>) :
+				(<section className="cs__no-results">
+					There are no results found. Please try another search.
+				</section>)
+			}
 			<section className="cs__pagination">
 				<PaginationControls
 					offset={offset}

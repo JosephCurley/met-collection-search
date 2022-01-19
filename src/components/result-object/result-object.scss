@@ -35,3 +35,11 @@ $result-object-min-size: 240px;
 	height: 2.2em;
 	overflow: hidden;
 }
+
+.result-object__attribution {
+	@include line-clamp(2);
+	display: -webkit-box;
+	line-height: 1;
+	height: 2em;
+	overflow: hidden;
+}

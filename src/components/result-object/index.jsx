@@ -7,10 +7,11 @@ const ResultObject = ({collectionItem}) => {
 		`https://www.metmuseum.org${collectionItem.image}`;
 
 	const attributionString = collectionItem.artist || collectionItem.culture;
+	const dateString = collectionItem.date || "";
 
-	const attributionAndDate = attributionString ?
-		`${attributionString}, ${collectionItem.date}` :
-		collectionItem.date;
+	const attributionAndDate = attributionString  && dateString ?
+		`${attributionString}, ${dateString}` :
+		attributionString || dateString;
 
 	return (
 		<a
@@ -28,7 +29,7 @@ const ResultObject = ({collectionItem}) => {
 					dangerouslySetInnerHTML={{__html: collectionItem.title}}
 					className="result-object__title"
 				/>
-				<span>{attributionAndDate}</span>
+				<div className="result-object__attribution">{attributionAndDate || ""}</div>
 			</div>
 		</a>
 	)};
