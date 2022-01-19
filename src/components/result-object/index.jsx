@@ -15,6 +15,7 @@ const ResultObject = ({collectionItem}) => {
 
 	return (
 		<a
+			title={`${collectionItem.title} Object Page`}
 			href={collectionItem.url}
 			className="result-object">
 			<div className="result-object__image-container">
@@ -25,7 +26,7 @@ const ResultObject = ({collectionItem}) => {
 				/>
 			</div>
 			<div className="result-object__info">
-				<h4
+				<div
 					dangerouslySetInnerHTML={{__html: collectionItem.title}}
 					className="result-object__title"
 				/>

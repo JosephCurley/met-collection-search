@@ -101,6 +101,7 @@ h1 {
 	background: transparent;
 	border: 0;
 	cursor: pointer;
+	color: $color-black;
 	font-weight: 600;
 	height: 100%;
 	width: 100%;
@@ -153,14 +154,17 @@ h1 {
 	margin-bottom: $spacing-xxs;
 }
 
-.cs__facet {
-	font-size: $textsize-xxs;
+.cs__facet-container {
 	flex-basis: 100%;
 	flex-grow: 1;
 	flex-shrink: 0;
 	@media (min-width: $bp-small-screen) {
 		flex-basis: 40%;
 	}
+}
+
+.cs__facet {
+	font-size: $textsize-xxs;
 }
 
 .cs__show-only {

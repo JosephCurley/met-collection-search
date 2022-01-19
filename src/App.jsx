@@ -17,7 +17,12 @@ const defaultParams = new URLSearchParams({
 });
 
 const defaultParamString = defaultParams.toString();
-const defaultFacetObject = {id: "Facet","options":[]}
+
+const defaultFacetObjectArray = [];
+
+for (let i = 0; i < 4; i++) {
+	defaultFacetObjectArray.push({id: `dfa-${i}`,"options":[]});
+}
 
 const pageSizeOptions = [20,40,80];
 
@@ -48,7 +53,7 @@ const placeholderCollectionItem = {
 	"data": ""
 }
 
-let abortController = new AbortController();
+let abortController = null;
 
 const App = () => {
 	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
@@ -62,7 +67,7 @@ const App = () => {
 	const [offset, setOffset] = useState(0);
 	const [totalResults, setTotalResults] = useState(100);
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
-	const [facets, setFacets] = useState([defaultFacetObject]);
+	const [facets, setFacets] = useState(defaultFacetObjectArray);
 
 	const formatAndSetFacets = oldFacets => {
 		oldFacets.shift();
@@ -84,21 +89,31 @@ const App = () => {
 		setFacets(newFacets);
 	};
 
-	const searchCollection = async () => {
+	const callAPI = async () => {
 		setIsSearching(true);
-		abortController.abort();
+		abortController && abortController.abort();
 		abortController = new AbortController();
 		const request = await fetch(`${searchAPI}${searchParamsString}`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.results) {
-			await setResults(response.results);
-			await formatAndSetFacets(response.facets);
-			await setTotalResults(response.totalResults);
+			setResults(response.results);
+			formatAndSetFacets(response.facets);
+			setTotalResults(response.totalResults);
 		} else {
 			console.log("No Results");
 		}
-		setIsSearching(false);
 	};
+
+	const searchCollection = async () => {
+		try {
+			await callAPI();
+		} catch (e) {
+			console.error(e);
+		} finally {
+			abortController = null;
+			setIsSearching(false);
+		}
+	}
 
 	const handleSearchQueryChange = (param, event) => {
 		const paramsObject = new URLSearchParams(searchParamsString);
@@ -187,17 +202,26 @@ const App = () => {
 				<div className="cs__facet-wrapper">
 					{facets.map(facet => {
 						return (
-							<Select
-								defaultValue={facet.selectedValues}
-								className="cs__facet"
+							<div
 								key={facet.id}
-								isMulti
-								isSearchable="true"
-								name={facet.id}
-								placeholder={facet.label}
-								onChange={e => handleFacetChange(e,facet)}
-								options={facet.options}
-							/>
+								className="cs__facet-container">
+								<label
+									className="cs__facet-label screen-reader-only"
+									htmlFor={facet.id}>
+									{facet.label}
+								</label>
+								<Select
+									defaultValue={facet.selectedValues}
+									className="cs__facet"
+									isMulti
+									isSearchable="true"
+									inputId={facet.id}
+									name={facet.id}
+									placeholder={facet.label}
+									onChange={e => handleFacetChange(e,facet)}
+									options={facet.options}
+								/>
+							</div>
 						);
 					})}
 				</div>
