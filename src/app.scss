@@ -2,6 +2,7 @@
 @import "~@metmuseum/marble/src/global/accessibility.scss";
 @import "./fonts/font-declarations.scss";
 @import "./components/result-object/result-object";
+@import "./components/pagination-controls/pagination-controls";
 
 $bp-small-screen: 800px;
 
@@ -91,6 +92,7 @@ h1 {
 	flex-wrap: wrap;
 	max-width: 100%;
 	min-height: 50vh;
+	margin-bottom: $spacing-m;
 }
 
 .cs__facet-wrapper {
@@ -151,5 +153,9 @@ h1 {
 	font-size: $textsize-xs;
 	&[disabled] {
 		opacity: 0.5;
+	}
+	&:focus {
+		outline-color: $color-focus-state;
+		background-color: $color-focus-background;
 	}
 }

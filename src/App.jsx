@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from './components/search-bar';
 import ResultObject from './components/result-object';
+import PaginationControls from './components/pagination-controls';
 import Select from 'react-select';
 import './app.scss';
 
@@ -14,6 +15,8 @@ const defaultParams = new URLSearchParams({
 	"showOnly": null,
 	"sortBy": "Relevance"
 });
+
+const pageSizeOptions = [20,40,80];
 
 const defaultParamString = defaultParams.toString();
 const defaultFacetObject = {id: "Facet","options":[]}
@@ -32,8 +35,9 @@ const App = () => {
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
 	const [showOnly, setShowOnly] = useState({});
-	const [perPage, setPerPage] = useState("20");
-
+	const [perPage, setPerPage] = useState(20);
+	const [offset, setOffset] = useState(0);
+	const [totalResults, setTotalResults] = useState(100);
 	const [results, setResults] = useState([]);
 	const [facets, setFacets] = useState([defaultFacetObject]);
 
@@ -63,6 +67,7 @@ const App = () => {
 		if (response.results) {
 			await setResults(response.results);
 			await formatAndSetFacets(response.facets);
+			await setTotalResults(response.totalResults);
 		} else {
 			console.log("No Results");
 		}
@@ -72,13 +77,6 @@ const App = () => {
 		const paramsObject = new URLSearchParams(searchParamsString);
 		paramsObject.set(param, event.target.value);
 		setSearchParamsString(paramsObject.toString());
-	};
-
-	const handlePerPageChange = event => {
-		const paramsObject = new URLSearchParams(searchParamsString);
-		paramsObject.set("perPage", event.target.value);
-		setSearchParamsString(paramsObject.toString());
-		setPerPage(event.target.value);
 	};
 
 	const handleFacetChange= (e, facet) => {
@@ -107,11 +105,27 @@ const App = () => {
 		setSearchParamsString(paramsObject.toString());
 	};
 
+	const handlePaginationChange = e => {
+		const paramsObject = new URLSearchParams(searchParamsString);
+		const newOffset = Math.max(0, parseInt(e.target.value) + parseInt(offset));
+
+		paramsObject.set("offset", newOffset);
+		setSearchParamsString(paramsObject.toString());
+		setOffset(newOffset);
+	};
+
+	const handlePerPageChange = event => {
+		const paramsObject = new URLSearchParams(searchParamsString);
+		paramsObject.set("perPage", event.target.value);
+		setSearchParamsString(paramsObject.toString());
+		setPerPage(event.target.value);
+	};
+
 	const setStateFromURLParams = params => {
 		setQuery(params.get("q") || "");
 		setSearchField(params.get("searchField") || "");
-		setPerPage(params.get("perPage") || "20");
-
+		setPerPage(parseInt(params.get("perPage")) || 20);
+		setOffset(parseInt(params.get("offset")) || 0);
 		if (params.get("showOnly")) {
 			const showOnlyObj = params.get("showOnly").split("|").reduce((o, key) => ({ ...o, [key]: true}), {})
 			setShowOnly(showOnlyObj);
@@ -194,9 +208,15 @@ const App = () => {
 				})}
 			</section>
 			<section className="cs__pagination">
+				<PaginationControls
+					offset={offset}
+					handlePaginationChange={handlePaginationChange}
+					perPage={perPage}
+					totalResults={totalResults}
+				/>
 				<div className="cs__rpp">
 					<span>Results per page:</span>
-					{["20","40","60"].map(value => {
+					{pageSizeOptions.map(value => {
 						return (
 							<button
 								disabled={perPage === value}

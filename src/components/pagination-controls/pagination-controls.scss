@@ -1,0 +1,28 @@
+.cs__page-controls {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-column-gap: $spacing-micro;
+	margin-bottom: $spacing-xxs;
+}
+
+.pagination-button {
+	@include button-reset();
+	height: $spacing-s;
+	width: $spacing-s;
+	border: 1px solid $color-black;
+	&[disabled] {
+		opacity: 0.7;
+		border: 0;
+	}
+	&:focus {
+		outline-color: $color-focus-state;
+		background-color: $color-focus-background;
+	}
+}
+
+.button-spacer {
+	height: $spacing-s;
+	width: $spacing-s;
+	opacity: 0;
+}

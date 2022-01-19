@@ -10,7 +10,6 @@
 	padding: base.$spacing-micro;
 
 	&:focus {
-		outline: none;
 		box-shadow: 0px 0px 10px base.$color-grey-500;
 	}
 }
