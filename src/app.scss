@@ -111,11 +111,23 @@ h1 {
 	}
 }
 
+.cs__total-results {
+	font-weight: 600;
+}
+
 .cs__sort-results {
 	align-items: center;
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
+	flex-wrap: wrap;
 	margin-bottom: $spacing-xxs;
+	grid-column-gap: $spacing-micro;
+	grid-row-gap: $spacing-micro;
+}
+.cs__sort-control {
+	align-items: center;
+	display: flex;
+	justify-content: flex-end;
 	grid-column-gap: $spacing-micro;
 }
 

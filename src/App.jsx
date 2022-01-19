@@ -256,22 +256,25 @@ const App = () => {
 				</ul>
 			</section>
 			<section className="cs__sort-results">
-				<span className="cs__section-title">Sort By:</span>
-				<div className="cs-select__wrapper">
-					<select
-						className="cs-select"
-						name="sort-by"
-						id="sort-by"
-						value={sortBy}
-						onChange={event => handleSearchQueryChange("sortBy", event)}>
-						{sortByFields.map(sortBy => {
-							return (
-								<option key={sortBy.value} value={sortBy.value}>
-									{sortBy.name}
-								</option>
-							)
-						})}
-					</select>
+				<div className="cs__total-results">Showing {totalResults.toLocaleString()} total results</div>
+				<div className="cs__sort-control">
+					<span className="cs__section-title">Sort By:</span>
+					<div className="cs-select__wrapper">
+						<select
+							className="cs-select"
+							name="sort-by"
+							id="sort-by"
+							value={sortBy}
+							onChange={event => handleSearchQueryChange("sortBy", event)}>
+							{sortByFields.map(sortBy => {
+								return (
+									<option key={sortBy.value} value={sortBy.value}>
+										{sortBy.name}
+									</option>
+								)
+							})}
+						</select>
+					</div>
 				</div>
 			</section>
 			{results.length > 0 ? (
