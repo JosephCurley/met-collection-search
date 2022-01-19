@@ -22,23 +22,23 @@ const defaultFacetObject = {id: "Facet","options":[]}
 const pageSizeOptions = [20,40,80];
 
 const sortByFields = [
-	{value: "Relevance", name: "Relevance"},
-	{value: "Title", name: "Title (a-z)"},
-	{value: "TitleDesc", name: "Title (z-a)"},
-	{value: "DateDesc", name: "Date (newest-oldest)"},
-	{value: "Date", name: "Date (oldest-newest)"},
-	{value: "ArtistMaker", name: "Artist/Maker (a-z)"},
-	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)"},
-	{value: "AccesionNumber", name: "Accession Number (0-9)"},
-	{value: "AccesionNumberDesc", name: "Accession Number (9-0)"}
+	{value: "Relevance", name: "Relevance", key: "Relevance"},
+	{value: "Title", name: "Title (a-z)", key: "Title"},
+	{value: "TitleDesc", name: "Title (z-a)", key: "TitleDesc"},
+	{value: "DateDesc", name: "Date (newest-oldest)", key: "DateDesc"},
+	{value: "Date", name: "Date (oldest-newest)", key: "Date"},
+	{value: "ArtistMaker", name: "Artist/Maker (a-z)", key: "ArtistMaker"},
+	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)", key: "ArtistMakerDesc"},
+	{value: "AccesionNumber", name: "Accession Number (0-9)", key: "AccesionNumber"},
+	{value: "AccesionNumberDesc", name: "Accession Number (9-0)", key: "AccesionNumberDesc"}
 ];
 
 const showOnlyOptions = [
-	{value: "highlights", name: "Highlights"},
-	{value: "withImage", name: "Artworks With Image"},
-	{value: "onDisplay", name: "Artworks on Display"},
-	{value: "openAccess", name: "Open Access"},
-	{value: "provenance", name: "Nazi-era provenance"},
+	{value: "highlights", name: "Highlights", key: "highlights"},
+	{value: "withImage", name: "Artworks With Image", key: "withImage"},
+	{value: "onDisplay", name: "Artworks on Display", key: "onDisplay"},
+	{value: "openAccess", name: "Open Access", key: "openAccess"},
+	{value: "provenance", name: "Nazi-era provenance", key: "provenance"}
 ];
 
 const placeholderCollectionItem = {
@@ -52,6 +52,7 @@ let abortController = new AbortController();
 
 const App = () => {
 	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
+	const [isSearching, setIsSearching] = useState(false);
 
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
@@ -84,6 +85,7 @@ const App = () => {
 	};
 
 	const searchCollection = async () => {
+		setIsSearching(true);
 		abortController.abort();
 		abortController = new AbortController();
 		const request = await fetch(`${searchAPI}${searchParamsString}`, { signal: abortController.signal });
@@ -95,6 +97,7 @@ const App = () => {
 		} else {
 			console.log("No Results");
 		}
+		setIsSearching(false);
 	};
 
 	const handleSearchQueryChange = (param, event) => {
@@ -172,7 +175,7 @@ const App = () => {
 	}, [searchParamsString]);
 
 	return (
-		<main className="collection-search">
+		<main className={isSearching ? `is-searching collection-search` : `collection-search`}>
 			<h1>Search The Collection</h1>
 			<SearchBar
 				query={query}

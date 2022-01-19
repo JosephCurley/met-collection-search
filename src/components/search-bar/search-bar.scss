@@ -7,7 +7,26 @@
 	min-width: 0;
 	padding: $spacing-micro;
 	text-overflow: ellipsis;
+	background-position: 30% 50%;
+	background: linear-gradient(-45deg, $color-green-good-news-400, $color-green-good-news-600, $color-white, $color-white);
+	background-size: 400% 400%;
 	&:focus {
 		box-shadow: 0px 0px 10px $color-grey-500;
+	}
+	.is-searching & {
+		animation: gradient 10s linear infinite;
+	}
+}
+
+
+@keyframes gradient {
+	0% {
+		background-position: 30% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 30% 50%;
 	}
 }
