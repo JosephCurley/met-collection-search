@@ -38,19 +38,28 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 			</button>
 		)};
 
+	const maxPages = (totalPages, currentPage, numberOfButtons) => {
+		if (totalPages - currentPage >= numberOfButtons){
+			return currentPage + numberOfButtons
+		} else {
+			return Math.max(0, totalPages - currentPage);
+		}
+	};
+
 	const generateButtons = (offset, perPage) => {
 		const currentPage = Math.floor(offset/perPage);
+		const lastPage = Math.floor(totalResults/perPage);
 		const arrayOfButtons = [];
 		if (currentPage >= 2) {
-			for (let i = (currentPage-2); i < currentPage+3; i++) {
+			for (let i = (currentPage-2); i < maxPages(lastPage, currentPage, 3); i++) {
 				arrayOfButtons.push(buttonTemplate(i, currentPage));
 			}
 		} else if (currentPage >= 1) {
-			for (let i = (currentPage-1); i < currentPage+4; i++) {
+			for (let i = (currentPage-1); i < maxPages(lastPage, currentPage, 4); i++) {
 				arrayOfButtons.push(buttonTemplate(i, currentPage));
 			}
 		} else if (currentPage === 0) {
-			for (let i = (currentPage); i < currentPage+5; i++) {
+			for (let i = (currentPage); i < maxPages(lastPage, currentPage, 5); i++) {
 				arrayOfButtons.push(buttonTemplate(i, currentPage));
 			}
 		}
@@ -61,7 +70,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 		<div className="cs__page-controls">
 			{offset > 0 ? backButton : <div className="button-spacer"/>}
 			{generateButtons(offset, perPage)}
-			{offset < totalResults ? forwardButton : <div className="button-spacer"/>}
+			{offset + perPage < totalResults ? forwardButton : <div className="button-spacer"/>}
 		</div>
 	)
 };

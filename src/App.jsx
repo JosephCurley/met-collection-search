@@ -119,6 +119,8 @@ const App = () => {
 	const handleSearchQueryChange = (param, event) => {
 		const paramsObject = new URLSearchParams(searchParamsString);
 		paramsObject.set(param, event.target.value);
+		paramsObject.set("offset", 0);
+		setOffset(0);
 		setSearchParamsString(paramsObject.toString());
 	};
 
@@ -126,6 +128,8 @@ const App = () => {
 		const paramsObject = new URLSearchParams(searchParamsString);
 		const newValue = e.map(selectedFacet => selectedFacet.value).join("|")
 		paramsObject.set(facet.id, newValue);
+		paramsObject.set("offset", 0);
+		setOffset(0);
 		setSearchParamsString(paramsObject.toString());
 	};
 
@@ -143,7 +147,8 @@ const App = () => {
 
 		const showOnlyString = Object.keys(newShowOnly).join("|");
 		const paramsObject = new URLSearchParams(searchParamsString);
-
+		paramsObject.set("offset", 0);
+		setOffset(0);
 		paramsObject.set("showOnly", showOnlyString);
 		setSearchParamsString(paramsObject.toString());
 	};
