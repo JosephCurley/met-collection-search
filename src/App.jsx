@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select';
 import SearchBar from './components/search-bar';
 import ResultObject from './components/result-object';
 import PaginationControls from './components/pagination-controls';
-import Select from 'react-select';
+import customStyles from './helpers/custom-styles'
 import './app.scss';
 
 const searchAPI = 'https://www.metmuseum.org/mothra/collectionlisting/search?';
@@ -211,6 +212,7 @@ const App = () => {
 									{facet.label}
 								</label>
 								<Select
+									styles={customStyles}
 									defaultValue={facet.selectedValues}
 									className="cs__facet"
 									isMulti

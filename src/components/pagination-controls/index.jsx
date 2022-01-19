@@ -4,16 +4,18 @@ import PropTypes from 'prop-types';
 const PaginationControls = ({offset, handlePaginationChange, perPage, totalResults}) => {
 	const backButton = (
 		<button
+			aria-label="Previous Page"
 			value={-perPage}
 			className="pagination-button pagination-button--back"
 			onClick={handlePaginationChange}
 			onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
-			-
+			&ndash;
 		</button>
 	);
 
 	const forwardButton = (
 		<button
+			aria-label="Next Page"
 			value={perPage}
 			className="pagination-button pagination-button--forward"
 			onClick={handlePaginationChange}
@@ -25,6 +27,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 	const buttonTemplate = (pageNumber, currentPage) => {
 		return (
 			<button
+				aria-label={`Go To Page ${pageNumber+1}`}
 				key={pageNumber}
 				disabled={pageNumber === currentPage}
 				value={(pageNumber - currentPage) * perPage}

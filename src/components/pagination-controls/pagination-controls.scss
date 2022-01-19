@@ -26,3 +26,8 @@
 	width: $spacing-s;
 	opacity: 0;
 }
+
+.pagination-button--back,
+.pagination-button--forward {
+	font-weight: 600;
+}
