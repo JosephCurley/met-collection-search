@@ -5,10 +5,13 @@ const ResultObject = ({collectionItem}) => {
 	const imageURL = collectionItem.image.includes("metmuseum.org") ?
 		collectionItem.image :
 		`https://www.metmuseum.org${collectionItem.image}`;
+
 	const attributionString = collectionItem.artist || collectionItem.culture;
+
 	const attributionAndDate = attributionString ?
 		`${attributionString}, ${collectionItem.date}` :
 		collectionItem.date;
+
 	return (
 		<a
 			href={collectionItem.url}

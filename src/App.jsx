@@ -16,6 +16,9 @@ const defaultParams = new URLSearchParams({
 	"sortBy": "Relevance"
 });
 
+const defaultParamString = defaultParams.toString();
+const defaultFacetObject = {id: "Facet","options":[]}
+
 const pageSizeOptions = [20,40,80];
 
 const sortByFields = [
@@ -30,10 +33,6 @@ const sortByFields = [
 	{value: "AccesionNumberDesc", name: "Accession Number (9-0)"}
 ];
 
-
-const defaultParamString = defaultParams.toString();
-const defaultFacetObject = {id: "Facet","options":[]}
-
 const showOnlyOptions = [
 	{value: "highlights", name: "Highlights"},
 	{value: "withImage", name: "Artworks With Image"},
@@ -41,6 +40,15 @@ const showOnlyOptions = [
 	{value: "openAccess", name: "Open Access"},
 	{value: "provenance", name: "Nazi-era provenance"},
 ];
+
+const placeholderCollectionItem = {
+	"url": "",
+	"image": "https://www.metmuseum.org/content/img/placeholders/NoImageAvailableIcon.png",
+	"artist": "",
+	"data": ""
+}
+
+let abortController = new AbortController();
 
 const App = () => {
 	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
@@ -52,7 +60,7 @@ const App = () => {
 	const [perPage, setPerPage] = useState(20);
 	const [offset, setOffset] = useState(0);
 	const [totalResults, setTotalResults] = useState(100);
-	const [results, setResults] = useState([]);
+	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
 	const [facets, setFacets] = useState([defaultFacetObject]);
 
 	const formatAndSetFacets = oldFacets => {
@@ -76,7 +84,9 @@ const App = () => {
 	};
 
 	const searchCollection = async () => {
-		const request = await fetch(`${searchAPI}${searchParamsString}`);
+		abortController.abort();
+		abortController = new AbortController()
+		const request = await fetch(`${searchAPI}${searchParamsString}`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.results) {
 			await setResults(response.results);
