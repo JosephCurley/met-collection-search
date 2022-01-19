@@ -39,22 +39,18 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 		)};
 
 	const maxPages = (totalPages, currentPage, numberOfButtons) => {
-		if (totalPages - currentPage >= numberOfButtons){
-			return currentPage + numberOfButtons
-		} else {
-			return Math.max(0, totalPages - currentPage);
-		}
+		return Math.min(totalPages, currentPage + numberOfButtons);
 	};
 
 	const generateButtons = (offset, perPage) => {
 		const currentPage = Math.floor(offset/perPage);
-		const lastPage = Math.floor(totalResults/perPage);
+		const lastPage = Math.ceil(totalResults/perPage);
 		const arrayOfButtons = [];
 		if (currentPage >= 2) {
 			for (let i = (currentPage-2); i < maxPages(lastPage, currentPage, 3); i++) {
 				arrayOfButtons.push(buttonTemplate(i, currentPage));
 			}
-		} else if (currentPage >= 1) {
+		} else if (currentPage === 1) {
 			for (let i = (currentPage-1); i < maxPages(lastPage, currentPage, 4); i++) {
 				arrayOfButtons.push(buttonTemplate(i, currentPage));
 			}
