@@ -20,6 +20,7 @@ const ResultObject = ({collectionItem}) => {
 			className="result-object">
 			<div className="result-object__image-container">
 				<img
+					loading="lazy"
 					className="result-object__image"
 					src={imageURL}
 					alt={`Image of ${collectionItem.title}`}
