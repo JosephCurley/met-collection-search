@@ -9,19 +9,7 @@ import './app.scss';
 
 const searchAPI = 'https://www.metmuseum.org/mothra/collectionlisting/search?';
 
-const defaultParams = new URLSearchParams({
-	"offset": 0,
-	"pageSize": 0,
-	"perPage": 20,
-	"searchField": "All",
-	"showOnly": null,
-	"sortBy": "Relevance"
-});
-
-const defaultParamString = defaultParams.toString();
-
 const defaultFacetObjectArray = [];
-
 for (let i = 0; i < 4; i++) {
 	defaultFacetObjectArray.push({id: `dfa-${i}`,"options":[]});
 }
@@ -29,25 +17,24 @@ for (let i = 0; i < 4; i++) {
 const pageSizeOptions = [20,40,80];
 
 const sortByFields = [
-	{value: "Relevance", name: "Relevance", key: "Relevance"},
-	{value: "Title", name: "Title (a-z)", key: "Title"},
-	{value: "TitleDesc", name: "Title (z-a)", key: "TitleDesc"},
-	{value: "DateDesc", name: "Date (newest-oldest)", key: "DateDesc"},
-	{value: "Date", name: "Date (oldest-newest)", key: "Date"},
-	{value: "ArtistMaker", name: "Artist/Maker (a-z)", key: "ArtistMaker"},
-	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)", key: "ArtistMakerDesc"},
-	{value: "AccesionNumber", name: "Accession Number (0-9)", key: "AccesionNumber"},
-	{value: "AccesionNumberDesc", name: "Accession Number (9-0)", key: "AccesionNumberDesc"}
+	{value: "Relevance", name: "Relevance"},
+	{value: "Title", name: "Title (a-z)"},
+	{value: "TitleDesc", name: "Title (z-a)"},
+	{value: "DateDesc", name: "Date (newest-oldest)"},
+	{value: "Date", name: "Date (oldest-newest)"},
+	{value: "ArtistMaker", name: "Artist/Maker (a-z)"},
+	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)"},
+	{value: "AccesionNumber", name: "Accession Number (0-9)"},
+	{value: "AccesionNumberDesc", name: "Accession Number (9-0)"}
 ];
 
 const showOnlyOptions = [
-	{value: "highlights", name: "Highlights", key: "highlights"},
-	{value: "withImage", name: "Artworks With Image", key: "withImage"},
-	{value: "onDisplay", name: "Artworks on Display", key: "onDisplay"},
+	{value: "highlights", name: "Highlights"},
+	{value: "withImage", name: "Artworks With Image"},
+	{value: "onDisplay", name: "Artworks on Display"},
 	{
 		value: "openAccess",
 		name: "Open Access",
-		key: "openAccess",
 		icon: "i",
 		iconText: `<div>As part of the Met's
 			<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/open-access">Open Access policy</a>,
@@ -59,7 +46,6 @@ const showOnlyOptions = [
 	{
 		value: "NEprovenance",
 		name: "Nazi-era provenance",
-		key: "NEprovenance", icon: "i",
 		iconText: `Objects with changed or unknown ownership in continental Europe between 1933-1945.
 		<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/provenance-research-project">Learn more</a>`
 	}
@@ -75,7 +61,7 @@ const placeholderCollectionItem = {
 let abortController = null;
 
 const App = () => {
-	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
+	const [searchParamsString, setSearchParamsString] = useState("");
 	const [isSearching, setIsSearching] = useState(false);
 
 	const [query, setQuery] = useState("");
@@ -210,8 +196,6 @@ const App = () => {
 		const url = new URL(`${window.location}`);
 		const params = new URLSearchParams(url.search.slice(1));
 		setSearchParamsString(params.toString());
-
-		setStateFromURLParams(params);
 	}, []);
 
 	useEffect(() => {
@@ -319,10 +303,10 @@ const App = () => {
 			</section>
 			{results.length > 0 ? (
 				<section className="cs__results">
-					{results.map(collectionItem => {
+					{results.map((collectionItem,i) => {
 						return (
 							<ResultObject
-								key={collectionItem.accessionNumber}
+								key={collectionItem.accessionNumber || `dummyItem-${i}`}
 								collectionItem={collectionItem}
 							/>
 						);
