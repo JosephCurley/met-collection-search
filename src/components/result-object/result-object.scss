@@ -1,9 +1,10 @@
 @import "~@metmuseum/marble/src/base/base";
 
-.result-object{
+.result-object {
 	@include link-reset();
 	border-radius: 4px;
 	padding: $spacing-micro;
+
 	&:hover,
 	&:focus {
 		background-color: $color-focus-background;
@@ -22,24 +23,24 @@
 }
 
 .result-object__image {
-	position: absolute;
 	max-height: 100%;
 	max-width: 100%;
+	position: absolute;
 }
 
 .result-object__info {
-	text-align: center;
 	display: flex;
 	flex-direction: column;
 	grid-row-gap: $spacing-micro;
+	text-align: center;
 }
 
 .result-object__title {
 	@include typography-h5();
 	@include line-clamp(2);
-	display: -webkit-box;
-	line-height: 1.1;
+	display: -webkit-box; /* stylelint-disable-line */
 	height: 2.2em;
+	line-height: 1.1;
 	overflow: hidden;
 
 	.result-object:focus &,
@@ -50,8 +51,8 @@
 
 .result-object__attribution {
 	@include line-clamp(2);
-	display: -webkit-box;
-	line-height: 1;
+	display: -webkit-box; /* stylelint-disable-line */
 	height: 2em;
+	line-height: 1;
 	overflow: hidden;
 }

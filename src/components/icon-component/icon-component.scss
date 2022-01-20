@@ -5,16 +5,16 @@
 }
 
 .cs__icon {
-	text-align: center;
+	border: 1px solid $color-black;
+	border-radius: 100%;
 	display: inline-flex;
+	display: inline-block;
+	font-size: $textsize-xs;
+	height: $textsize-xs;
 	justify-content: center;
 	line-height: 1em;
-	font-size: $textsize-xs;
+	text-align: center;
 	width: $textsize-xs;
-	height: $textsize-xs;
-	border-radius: 100%;
-	border: 1px solid $color-black;
-	display: inline-block;
 
 	.cs__icon-wrapper:focus-within &,
 	.cs__icon-wrapper:hover &,
@@ -24,13 +24,13 @@
 }
 
 .cs__icon-modal {
-	white-space: normal;
+	bottom: calc(100% - #{$spacing-micro});
+	display: none;
 	height: auto;
 	position: absolute;
-	display: none;
-	width: 250px;
-	bottom: calc(100% - #{$spacing-micro});
 	right: calc(100% - 50px);
+	white-space: normal;
+	width: 250px;
 
 	.cs__icon-wrapper:focus-within &,
 	.cs__icon-wrapper:hover &,
@@ -41,18 +41,19 @@
 
 .cs__icon-text {
 	background: $color-white;
-	padding: $spacing-micro;
-	cursor: text;
+	border: 1px solid $color-black;
 	box-shadow: $shadow-passive;
-	border: 1px solid black;
-	line-height: 1.1;
+	cursor: text;
 	font-size: $textsize-xs;
+	line-height: 1.1;
 	margin: $spacing-xxs $spacing-micro;
+	padding: $spacing-micro;
 
 	a {
-		white-space: nowrap;
 		margin-left: 2px;
-		&:hover {
+		white-space: nowrap;
+
+		&:hover { /* stylelint-disable-line */
 			text-decoration: none;
 		}
 	}
@@ -60,9 +61,10 @@
 	div {
 		margin-bottom: $spacing-xs;
 	}
+
 	em {
 		display: block;
+		font-style: normal;
 		font-weight: 600;
-		font-style:normal;
 	}
 }

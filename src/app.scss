@@ -1,6 +1,6 @@
 @import "~@metmuseum/marble/src/base/base";
-@import "~@metmuseum/marble/src/global/accessibility.scss";
-@import "./fonts/font-declarations.scss";
+@import "~@metmuseum/marble/src/global/accessibility";
+@import "./fonts/font-declarations";
 @import "./components/result-object/result-object";
 @import "./components/search-bar/search-bar";
 @import "./components/pagination-controls/pagination-controls";
@@ -14,20 +14,24 @@ $bp-small-screen: 800px;
 body {
 	@include typography-body-long();
 	-webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-	padding: 0;
+	-moz-osx-font-smoothing: grayscale;
 	margin: 0;
+	padding: 0;
 }
 
 a {
 	color: inherit;
+
 	&:visited,
 	&:hover {
 		color: inherit;
 	}
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
 	margin: 0 0 0.5em;
 }
 
@@ -35,26 +39,26 @@ h1, h2, h3, h4 {
 	@include typography-h1-expressive();
 	display: block;
 	font-size: $textsize-xl;
-	margin-bottom: 0.5em;
 	height: 1em;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+	margin-bottom: 0.5em;
 	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .button {
 	@include button-base();
+	align-items: center;
+	display: flex;
 	height: 40px;
+	justify-content: center;
 	line-height: 0;
 	min-width: 100px;
-	white-space: nowrap;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	padding: 0 $spacing-xxs;
+	white-space: nowrap;
 }
 
-.button--primary{
+.button--primary {
 	@include primary-button();
 	@include primary-button--filled();
 }
@@ -76,8 +80,8 @@ h1, h2, h3, h4 {
 
 .collection-search {
 	margin: 0 $spacing-component-margin;
-	padding: $spacing-xs 0;
 	max-width: 100%;
+	padding: $spacing-xs 0;
 }
 
 .cs__section-title {
@@ -87,34 +91,36 @@ h1, h2, h3, h4 {
 
 .cs__search {
 	display: flex;
-	margin-bottom: $spacing-xxs;
 	grid-column-gap: $spacing-xxs;
 	grid-row-gap: $spacing-xxs;
+	margin-bottom: $spacing-xxs;
 }
 
 .cs-select__wrapper {
 	border: 2px solid $color-black;
 	border-radius: 50px;
 	padding-right: $spacing-micro;
+
 	&:focus-within {
-		border-color: $color-focus-state;
 		background-color: $color-focus-background;
+		border-color: $color-focus-state;
 	}
 }
 
 .cs-select {
-	-webkit-appearance:none;
+	appearance: none;
 	background: transparent;
 	border: 0;
-	cursor: pointer;
 	color: $color-black;
+	cursor: pointer;
 	font-weight: 600;
 	height: 100%;
-	width: 100%;
 	padding: $spacing-micro;
 	text-overflow: ellipsis;
+	width: 100%;
+
 	&:focus {
-		outline:0;
+		outline: 0;
 	}
 }
 
@@ -125,28 +131,29 @@ h1, h2, h3, h4 {
 .cs__sort-results {
 	align-items: center;
 	display: flex;
-	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-bottom: $spacing-xxs;
 	grid-column-gap: $spacing-micro;
 	grid-row-gap: $spacing-micro;
+	justify-content: space-between;
+	margin-bottom: $spacing-xxs;
 }
+
 .cs__sort-control {
 	align-items: center;
 	display: flex;
-	justify-content: flex-end;
 	grid-column-gap: $spacing-micro;
+	justify-content: flex-end;
 }
 
 .cs__results {
 	display: grid;
-	grid-template-columns: 1;
+	flex-wrap: wrap;
 	grid-column-gap: $spacing-micro;
 	grid-row-gap: $spacing-micro;
-	flex-wrap: wrap;
+	grid-template-columns: 1;
+	margin-bottom: $spacing-m;
 	max-width: 100%;
 	min-height: 50vh;
-	margin-bottom: $spacing-m;
 	@media (min-width: 500px) {
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -161,15 +168,15 @@ h1, h2, h3, h4 {
 .cs__no-results {
 	font-size: $textsize-m;
 	font-weight: 600;
-	text-align: center;
 	padding: $spacing-m;
+	text-align: center;
 }
 
 .cs__facet-wrapper {
 	display: flex;
+	flex-wrap: wrap;
 	grid-column-gap: $spacing-xxs;
 	grid-row-gap: $spacing-xxs;
-	flex-wrap: wrap;
 	margin-bottom: $spacing-xxs;
 }
 
@@ -214,39 +221,44 @@ h1, h2, h3, h4 {
 .cs__rpp {
 	align-items: center;
 	display: flex;
-	font-weight: 600;
 	font-size: $textsize-s;
+	font-weight: 600;
+	grid-column-gap: $spacing-micro;
 	justify-content: center;
 	text-align: center;
-	grid-column-gap: $spacing-micro;
 }
 
 .rpp__option {
 	@include button-reset();
-	padding: $spacing-micro;
-	font-weight: 400;
 	font-size: $textsize-xs;
+	font-weight: 400;
+	padding: $spacing-micro;
+
 	&[disabled] {
 		opacity: 0.5;
 	}
+
 	&:focus {
-		outline-color: $color-focus-state;
 		background-color: $color-focus-background;
+		outline-color: $color-focus-state;
 	}
 }
+
 .rtt__wrapper {
 	display: flex;
 	justify-content: center;
 	padding: $spacing-micro;
 }
+
 .cs__rtt-button {
 	@include button-reset();
 	border: 1px solid $color-black;
-	padding: $spacing-micro;
-	font-weight: 600;
 	font-size: $textsize-xs;
+	font-weight: 600;
+	padding: $spacing-micro;
+
 	&:focus {
-		outline-color: $color-focus-state;
 		background-color: $color-focus-background;
+		outline-color: $color-focus-state;
 	}
 }

@@ -1,30 +1,32 @@
 .cs__page-controls {
-	display: flex;
-	justify-content: center;
 	align-items: center;
+	display: flex;
 	grid-column-gap: $spacing-micro;
+	justify-content: center;
 	margin-bottom: $spacing-xxs;
 }
 
 .pagination-button {
 	@include button-reset();
+	border: 1px solid $color-black;
 	height: $spacing-s;
 	width: $spacing-s;
-	border: 1px solid $color-black;
+
 	&[disabled] {
-		opacity: 0.7;
 		border: 0;
+		opacity: 0.7;
 	}
+
 	&:focus {
-		outline-color: $color-focus-state;
 		background-color: $color-focus-background;
+		outline-color: $color-focus-state;
 	}
 }
 
 .button-spacer {
 	height: $spacing-s;
-	width: $spacing-s;
 	opacity: 0;
+	width: $spacing-s;
 }
 
 .pagination-button--back,
