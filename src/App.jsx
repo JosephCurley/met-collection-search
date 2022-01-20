@@ -44,7 +44,18 @@ const showOnlyOptions = [
 	{value: "highlights", name: "Highlights", key: "highlights"},
 	{value: "withImage", name: "Artworks With Image", key: "withImage"},
 	{value: "onDisplay", name: "Artworks on Display", key: "onDisplay"},
-	{value: "openAccess", name: "Open Access", key: "openAccess"},
+	{
+		value: "openAccess",
+		name: "Open Access",
+		key: "openAccess",
+		icon: "i",
+		iconText: `<div>As part of the Met's
+			<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/open-access">Open Access policy</a>,
+			you can freely copy, modify and distribute this image, even for commercial purposes.
+		</div>
+		<em>API</em>Public domain data for this object can also be accessed using the Met's
+		<a target="_new" href="https://metmuseum.github.io/">Open Access API</a>`
+	},
 	{
 		value: "NEprovenance",
 		name: "Nazi-era provenance",

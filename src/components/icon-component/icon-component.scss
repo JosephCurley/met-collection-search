@@ -29,7 +29,7 @@
 	position: absolute;
 	display: none;
 	width: 250px;
-	bottom: calc(100%);
+	bottom: calc(100% - #{$spacing-micro});
 	right: calc(100% - 100px);
 
 	.cs__icon-wrapper:focus-within &,
@@ -48,7 +48,7 @@
 	border: 1px solid black;
 	line-height: 1.1;
 	font-size: $textsize-xs;
-	margin: $spacing-micro;
+	margin: $spacing-xxs;
 
 	a {
 		white-space: nowrap;
@@ -56,5 +56,14 @@
 		&:hover {
 			text-decoration: none;
 		}
+	}
+
+	div {
+		margin-bottom: $spacing-xs;
+	}
+	em {
+		display: block;
+		font-weight: 600;
+		font-style:normal;
 	}
 }
