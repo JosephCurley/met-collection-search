@@ -31,10 +31,12 @@ h1, h2, h3, h4 {
 	margin: 0 0 0.5em;
 }
 
-h1 {
+.cs__title {
 	@include typography-h1-expressive();
+	display: block;
 	font-size: $textsize-xl;
 	margin-bottom: 0.5em;
+	min-height: 1em;
 }
 
 .button {

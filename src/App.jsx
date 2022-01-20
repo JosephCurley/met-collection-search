@@ -225,7 +225,7 @@ const App = () => {
 		<main
 			ref={topRef}
 			className={isSearching ? `is-searching collection-search` : `collection-search`}>
-			<h1>Search The Collection</h1>
+			<h1 className="cs__title">Search The Collection</h1>
 			<SearchBar
 				query={query}
 				selectedField={searchField}
