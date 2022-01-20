@@ -44,7 +44,7 @@ const showOnlyOptions = [
 	{value: "withImage", name: "Artworks With Image", key: "withImage"},
 	{value: "onDisplay", name: "Artworks on Display", key: "onDisplay"},
 	{value: "openAccess", name: "Open Access", key: "openAccess"},
-	{value: "provenance", name: "Nazi-era provenance", key: "provenance"}
+	{value: "NEprovenance", name: "Nazi-era provenance", key: "NEprovenance"}
 ];
 
 const placeholderCollectionItem = {
@@ -145,7 +145,6 @@ const App = () => {
 		} else {
 			delete newShowOnly[name];
 		}
-
 		const showOnlyString = Object.keys(newShowOnly).join("|");
 		const paramsObject = new URLSearchParams(searchParamsString);
 		paramsObject.set("offset", 0);
@@ -176,7 +175,7 @@ const App = () => {
 		setSortBy(params.get("sortBy") || "Relevance");
 		setPerPage(parseInt(params.get("perPage")) || 20);
 		setOffset(parseInt(params.get("offset")) || 0);
-		if (params.get("showOnly")) {
+		if (params.get("showOnly") !== "null" && params.get("showOnly")) {
 			const showOnlyObj = params.get("showOnly").split("|").reduce((o, key) => ({ ...o, [key]: true}), {})
 			setShowOnly(showOnlyObj);
 		}
