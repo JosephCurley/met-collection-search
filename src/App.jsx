@@ -3,6 +3,7 @@ import Select from 'react-select';
 import SearchBar from './components/search-bar';
 import ResultObject from './components/result-object';
 import PaginationControls from './components/pagination-controls';
+import IconComponent from './components/icon-component';
 import customStyles from './helpers/custom-styles'
 import './app.scss';
 
@@ -44,7 +45,13 @@ const showOnlyOptions = [
 	{value: "withImage", name: "Artworks With Image", key: "withImage"},
 	{value: "onDisplay", name: "Artworks on Display", key: "onDisplay"},
 	{value: "openAccess", name: "Open Access", key: "openAccess"},
-	{value: "NEprovenance", name: "Nazi-era provenance", key: "NEprovenance"}
+	{
+		value: "NEprovenance",
+		name: "Nazi-era provenance",
+		key: "NEprovenance", icon: "i",
+		iconText: `Objects with changed or unknown ownership in continental Europe between 1933-1945.
+		<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/provenance-research-project">Learn more</a>`
+	}
 ];
 
 const placeholderCollectionItem = {
@@ -260,6 +267,7 @@ const App = () => {
 								<label htmlFor={option.value}>
 									{option.name}
 								</label>
+								{option.icon && <IconComponent icon={option.icon} text={option.iconText}/>}
 							</li>
 						)
 					})}

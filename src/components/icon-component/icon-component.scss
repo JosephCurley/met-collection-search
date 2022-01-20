@@ -1,0 +1,60 @@
+.cs__icon-wrapper {
+	display: inline-flex;
+	position: relative;
+	transform: translate(4px, -4px);
+}
+
+.cs__icon {
+	text-align: center;
+	display: inline-flex;
+	justify-content: center;
+	line-height: 1em;
+	font-size: $textsize-xs;
+	width: $textsize-xs;
+	height: $textsize-xs;
+	border-radius: 100%;
+	border: 1px solid $color-black;
+	display: inline-block;
+
+	.cs__icon-wrapper:focus-within &,
+	.cs__icon-wrapper:hover &,
+	.cs__icon-wrapper:focus & {
+		background-color: $color-focus-background;
+	}
+}
+
+.cs__icon-modal {
+	white-space: normal;
+	height: auto;
+	position: absolute;
+	display: none;
+	width: 250px;
+	bottom: calc(100%);
+	right: calc(100% - 100px);
+
+	.cs__icon-wrapper:focus-within &,
+	.cs__icon-wrapper:hover &,
+	.cs__icon-wrapper:focus & {
+		display: block;
+	}
+}
+
+.cs__icon-text {
+	background: rgba($color-white, 0.95);
+	background-filter: blur(4px);
+	padding: $spacing-micro;
+	cursor: text;
+	box-shadow: $shadow-passive;
+	border: 1px solid black;
+	line-height: 1.1;
+	font-size: $textsize-xs;
+	margin: $spacing-micro;
+
+	a {
+		white-space: nowrap;
+		margin-left: 2px;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
