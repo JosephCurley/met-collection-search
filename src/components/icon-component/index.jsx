@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const IconComponent = ({icon, text}) => {
-	console.log(text);
 	return (
 		<div
 			className="cs__icon-wrapper"
