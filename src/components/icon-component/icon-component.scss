@@ -30,7 +30,7 @@
 	display: none;
 	width: 250px;
 	bottom: calc(100% - #{$spacing-micro});
-	right: calc(100% - 100px);
+	right: calc(100% - 50px);
 
 	.cs__icon-wrapper:focus-within &,
 	.cs__icon-wrapper:hover &,
