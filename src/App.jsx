@@ -69,6 +69,7 @@ const App = () => {
 	const [totalResults, setTotalResults] = useState(100);
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
 	const [facets, setFacets] = useState(defaultFacetObjectArray);
+	const topRef = React.createRef();
 
 	const formatAndSetFacets = oldFacets => {
 		oldFacets.shift();
@@ -181,6 +182,13 @@ const App = () => {
 		}
 	};
 
+	const scrollToRef = ref => {
+		ref.current.scrollIntoView({
+			block: 'start',
+			behavior: 'smooth'
+		});
+	};
+
 	useEffect(() => {
 		const url = new URL(`${window.location}`);
 		const params = new URLSearchParams(url.search.slice(1));
@@ -197,7 +205,9 @@ const App = () => {
 	}, [searchParamsString]);
 
 	return (
-		<main className={isSearching ? `is-searching collection-search` : `collection-search`}>
+		<main
+			ref={topRef}
+			className={isSearching ? `is-searching collection-search` : `collection-search`}>
 			<h1>Search The Collection</h1>
 			<SearchBar
 				query={query}
@@ -315,6 +325,14 @@ const App = () => {
 							</button>
 						)
 					})}
+				</div>
+				<div className="rtt__wrapper">
+					<button
+						onKeyDown={event => event.key === 'Enter' && scrollToRef(topRef)}
+						onClick={() => scrollToRef(topRef)}
+						className="cs__rtt-button">
+						Return To Top
+					</button>
 				</div>
 			</section>
 		</main>

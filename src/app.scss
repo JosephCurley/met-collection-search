@@ -70,7 +70,8 @@ h1 {
 }
 
 .collection-search {
-	margin: $spacing-xs $spacing-component-margin;
+	margin: 0 $spacing-component-margin;
+	padding: $spacing-xs 0;
 	max-width: 100%;
 }
 
@@ -222,6 +223,22 @@ h1 {
 	&[disabled] {
 		opacity: 0.5;
 	}
+	&:focus {
+		outline-color: $color-focus-state;
+		background-color: $color-focus-background;
+	}
+}
+.rtt__wrapper {
+	display: flex;
+	justify-content: center;
+	padding: $spacing-micro;
+}
+.cs__rtt-button {
+	@include button-reset();
+	border: 1px solid $color-black;
+	padding: $spacing-micro;
+	font-weight: 600;
+	font-size: $textsize-xs;
 	&:focus {
 		outline-color: $color-focus-state;
 		background-color: $color-focus-background;
