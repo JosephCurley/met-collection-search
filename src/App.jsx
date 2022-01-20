@@ -217,6 +217,15 @@ const App = () => {
 	useEffect(() => {
 		searchCollection();
 		const params = new URLSearchParams(searchParamsString);
+		params["offset"] === "0" && params.delete("offset");
+		[...params.entries()].forEach(([key, value]) => {
+			if (key === "offset" && value === "0") {
+				params.delete(key);
+			}
+			if (!value) {
+				params.delete(key);
+			}
+		});
 		window.history.replaceState({}, '', `${location.pathname}?${params}`);
 		setStateFromURLParams(params);
 	}, [searchParamsString]);
