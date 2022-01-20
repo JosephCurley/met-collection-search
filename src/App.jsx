@@ -193,6 +193,7 @@ const App = () => {
 		searchCollection();
 		const params = new URLSearchParams(searchParamsString);
 		window.history.replaceState({}, '', `${location.pathname}?${params}`);
+		setStateFromURLParams(params);
 	}, [searchParamsString]);
 
 	return (
