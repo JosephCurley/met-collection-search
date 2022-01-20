@@ -25,9 +25,18 @@
 	height: $spacing-s;
 	width: $spacing-s;
 	opacity: 0;
+	&.bbutton-spacer--wide {
+		width: $spacing-m;
+	}
 }
-
+.pagination-button--first,
+.pagination-button--last,
 .pagination-button--back,
 .pagination-button--forward {
 	font-weight: 600;
+}
+
+.pagination-button--first,
+.pagination-button--last {
+		width: $spacing-m;
 }

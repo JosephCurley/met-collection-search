@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PaginationControls = ({offset, handlePaginationChange, perPage, totalResults}) => {
+	const currentPage = Math.floor(offset/perPage);
+	const lastPage = Math.ceil(totalResults/perPage);
+
 	const backButton = (
 		<button
 			aria-label="Previous Page"
@@ -24,49 +27,50 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 		</button>
 	);
 
-	const buttonTemplate = (pageNumber, currentPage) => {
-		return (
-			<button
-				aria-label={`Go To Page ${pageNumber+1}`}
-				key={pageNumber}
-				disabled={pageNumber === currentPage}
-				value={(pageNumber - currentPage) * perPage}
-				className="pagination-button"
-				onClick={handlePaginationChange}
-				onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
-				{pageNumber+1}
-			</button>
-		)};
+	const firstButton = (
+		<button
+			aria-label="First Page"
+			value={-perPage * currentPage}
+			className="pagination-button pagination-button--first"
+			onClick={handlePaginationChange}
+			onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
+			1
+		</button>
+	);
 
-	const maxPages = (totalPages, currentPage, numberOfButtons) => {
-		return Math.min(totalPages, currentPage + numberOfButtons);
-	};
+	const lastButton = (
+		<button
+			aria-label="Last Page"
+			value={perPage * (lastPage - currentPage)}
+			className="pagination-button pagination-button--last"
+			onClick={handlePaginationChange}
+			onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
+			{lastPage}
+		</button>
+	);
 
-	const generateButtons = (offset, perPage) => {
-		const currentPage = Math.floor(offset/perPage);
-		const lastPage = Math.ceil(totalResults/perPage);
-		const arrayOfButtons = [];
-		if (currentPage >= 2) {
-			for (let i = (currentPage-2); i < maxPages(lastPage, currentPage, 3); i++) {
-				arrayOfButtons.push(buttonTemplate(i, currentPage));
-			}
-		} else if (currentPage === 1) {
-			for (let i = (currentPage-1); i < maxPages(lastPage, currentPage, 4); i++) {
-				arrayOfButtons.push(buttonTemplate(i, currentPage));
-			}
-		} else if (currentPage === 0) {
-			for (let i = (currentPage); i < maxPages(lastPage, currentPage, 5); i++) {
-				arrayOfButtons.push(buttonTemplate(i, currentPage));
-			}
-		}
-		return arrayOfButtons;
-	};
+	const currentButton = (
+		<button
+			key={currentPage}
+			disabled
+			className="pagination-button">
+			{currentPage}
+		</button>
+	);
+
+	// const maxPages = (totalPages, currentPage, numberOfButtons) => {
+	// 	return Math.min(totalPages, currentPage + numberOfButtons);
+	// };
+
+
 
 	return (
 		<div className="cs__page-controls">
+			{offset > 0 ? firstButton : <div className="button-spacer button-spacer--wide"/>}
 			{offset > 0 ? backButton : <div className="button-spacer"/>}
-			{generateButtons(offset, perPage)}
+			{currentButton}
 			{offset + perPage < totalResults ? forwardButton : <div className="button-spacer"/>}
+			{offset + perPage < totalResults ? lastButton : <div className="button-spacer button-spacer--wide"/>}
 		</div>
 	)
 };
