@@ -135,8 +135,8 @@ h1 {
 .cs__results {
 	display: grid;
 	grid-template-columns: 1;
-	grid-column-gap: $spacing-xxs;
-	grid-row-gap: $spacing-xxs;
+	grid-column-gap: $spacing-micro;
+	grid-row-gap: $spacing-micro;
 	flex-wrap: wrap;
 	max-width: 100%;
 	min-height: 50vh;

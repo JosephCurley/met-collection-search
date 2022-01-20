@@ -1,11 +1,10 @@
 @import "~@metmuseum/marble/src/base/base";
 
-$result-object-min-size: 240px;
-
 .result-object{
 	@include link-reset();
-	flex-basis: $result-object-min-size;
-	flex-grow: 1;
+	border-radius: 4px;
+	padding: $spacing-micro;
+	&:hover,
 	&:focus {
 		background-color: $color-focus-background;
 		outline: 0;
