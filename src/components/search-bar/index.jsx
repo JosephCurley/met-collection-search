@@ -10,39 +10,54 @@ const searchFields = [
 	{value: "AccesionNum", name: "Accesion Number"}
 ];
 
-const SearchBar = ({onChange, query, selectedField}) => (
-	<section className="cs__search">
-		<DebounceInput
-			className="object-search__input"
-			key="objectSearchBar"
-			placeholder="Search for Artist, Culture, Title, Accession #, Gallery, etc."
-			debounceTimeout={400}
-			type="search"
-			value={query}
-			onChange={event => onChange("q", event)}
-		/>
-		<div className="search-type__wrapper cs-select__wrapper">
-			<label
-				className="screen-reader-only"
-				htmlFor="search-type">Search Type:
-			</label>
-			<select
-				className="search-type cs-select"
-				name="search-type"
-				id="search-type"
-				value={selectedField}
-				onChange={event => onChange("searchField", event)}>
-				{searchFields.map(searchField => {
-					return (
-						<option key={searchField.value} value={searchField.value}>
-							{searchField.name}
-						</option>
-					)
-				})}
-			</select>
-		</div>
-	</section>
-);
+const SearchBar = ({onChange, query, selectedField}) => {
+
+	const activeField = searchFields.find(searchField => {
+		return searchField.value === selectedField;
+	});
+
+	let placeholderText = "Search";
+
+	if (!activeField || selectedField === "All") {
+		placeholderText = "Search for Artist, Culture, Title, Accession #, Gallery, etc.";
+	} else {
+		placeholderText = `Search by ${activeField.name}`;
+	}
+
+	return (
+		<section className="cs__search">
+			<DebounceInput
+				className="object-search__input"
+				key="objectSearchBar"
+				placeholder={placeholderText}
+				debounceTimeout={400}
+				type="search"
+				value={query}
+				onChange={event => onChange("q", event)}
+			/>
+			<div className="search-type__wrapper cs-select__wrapper">
+				<label
+					className="screen-reader-only"
+					htmlFor="search-type">Search Type:
+				</label>
+				<select
+					className="search-type cs-select"
+					name="search-type"
+					id="search-type"
+					value={selectedField}
+					onChange={event => onChange("searchField", event)}>
+					{searchFields.map(searchField => {
+						return (
+							<option key={searchField.value} value={searchField.value}>
+								{searchField.name}
+							</option>
+						)
+					})}
+				</select>
+			</div>
+		</section>
+	)
+};
 
 SearchBar.propTypes = {
 	selectedField: PropTypes.string,

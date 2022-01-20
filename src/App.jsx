@@ -66,7 +66,7 @@ const App = () => {
 	const [showOnly, setShowOnly] = useState({});
 	const [perPage, setPerPage] = useState(20);
 	const [offset, setOffset] = useState(0);
-	const [totalResults, setTotalResults] = useState(100);
+	const [totalResults, setTotalResults] = useState(20001);
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
 	const [facets, setFacets] = useState(defaultFacetObjectArray);
 	const topRef = React.createRef();
@@ -267,7 +267,9 @@ const App = () => {
 				</ul>
 			</section>
 			<section className="cs__sort-results">
-				<div className="cs__total-results">Showing {totalResults.toLocaleString()} total results</div>
+				<div className="cs__total-results">
+					Showing {totalResults > 20000 ? "tens of thousands of" : totalResults.toLocaleString()} results
+				</div>
 				<div className="cs__sort-control">
 					<span className="cs__section-title">Sort By:</span>
 					<div className="cs-select__wrapper">

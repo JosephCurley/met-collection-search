@@ -107,6 +107,7 @@ h1 {
 	height: 100%;
 	width: 100%;
 	padding: $spacing-micro;
+	text-overflow: ellipsis;
 	&:focus {
 		outline:0;
 	}
