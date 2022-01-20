@@ -40,8 +40,7 @@
 }
 
 .cs__icon-text {
-	background: rgba($color-white, 0.95);
-	background-filter: blur(4px);
+	background: $color-white;
 	padding: $spacing-micro;
 	cursor: text;
 	box-shadow: $shadow-passive;
