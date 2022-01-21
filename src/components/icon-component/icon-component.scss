@@ -24,7 +24,7 @@
 }
 
 .cs__icon-modal {
-	bottom: calc(100% - #{$spacing-micro});
+	bottom: calc(100% - 4px);
 	display: none;
 	height: auto;
 	position: absolute;
@@ -46,7 +46,7 @@
 	cursor: text;
 	font-size: $textsize-xs;
 	line-height: 1.1;
-	margin: $spacing-xxs $spacing-micro;
+	margin: $spacing-micro;
 	padding: $spacing-micro;
 
 	.darkmode & {
