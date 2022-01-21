@@ -34,18 +34,6 @@ h4 {
 	margin: 0 0 0.5em;
 }
 
-.cs__title {
-	@include typography-h1-expressive();
-	display: block;
-	//Almost $metserif but removing Georiga as fallback
-	font-family: "MetSerif", "Times New Roman", Times, serif;
-	font-size: $textsize-xl;
-	margin-bottom: 0.5em;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
 .button {
 	@include button-base();
 	align-items: center;
@@ -80,7 +68,7 @@ h4 {
 
 .collection-search {
 	@include typography-body-long();
-	letter-spacing: -0.05;
+	letter-spacing: -0.05em;
 	max-width: 100%;
 	padding: $spacing-xs $spacing-component-margin;
 
@@ -92,6 +80,18 @@ h4 {
 	&.fonts-loaded {
 		letter-spacing: normal;
 	}
+}
+
+.cs__title {
+	@include typography-h1-expressive();
+	display: block;
+	//Almost $metserif but removing Georiga as fallback
+	font-family: "MetSerif", "Times New Roman", Times, serif;
+	font-size: $textsize-xl;
+	margin-bottom: 0.5em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .cs__section-title {
