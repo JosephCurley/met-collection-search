@@ -5,7 +5,7 @@
 }
 
 .cs__icon {
-	border: 1px solid $color-black;
+	border: 1px solid currentColor;
 	border-radius: 100%;
 	display: inline-flex;
 	display: inline-block;
@@ -41,13 +41,17 @@
 
 .cs__icon-text {
 	background: $color-white;
-	border: 1px solid $color-black;
+	border: 1px solid currentColor;
 	box-shadow: $shadow-passive;
 	cursor: text;
 	font-size: $textsize-xs;
 	line-height: 1.1;
 	margin: $spacing-xxs $spacing-micro;
 	padding: $spacing-micro;
+
+	.darkmode & {
+		background-color: $color-grey-900;
+	}
 
 	a {
 		margin-left: 2px;

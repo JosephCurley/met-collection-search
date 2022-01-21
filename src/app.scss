@@ -12,7 +12,6 @@ $bp-small-screen: 800px;
 }
 
 body {
-	@include typography-body-long();
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	margin: 0;
@@ -79,9 +78,14 @@ h4 {
 }
 
 .collection-search {
-	margin: 0 $spacing-component-margin;
+	@include typography-body-long();
 	max-width: 100%;
-	padding: $spacing-xs 0;
+	padding: $spacing-xs $spacing-component-margin;
+
+	&.darkmode {
+		background-color: $color-grey-900;
+		color: $color-white;
+	}
 }
 
 .cs__section-title {
@@ -97,7 +101,7 @@ h4 {
 }
 
 .cs-select__wrapper {
-	border: 2px solid $color-black;
+	border: 2px solid currentColor;
 	border-radius: 50px;
 	padding-right: $spacing-micro;
 
@@ -111,7 +115,7 @@ h4 {
 	appearance: none;
 	background: transparent;
 	border: 0;
-	color: $color-black;
+	color: currentColor;
 	cursor: pointer;
 	font-weight: 600;
 	height: 100%;
@@ -252,7 +256,7 @@ h4 {
 
 .cs__rtt-button {
 	@include button-reset();
-	border: 1px solid $color-black;
+	border: 1px solid currentColor;
 	font-size: $textsize-xs;
 	font-weight: 600;
 	padding: $spacing-micro;

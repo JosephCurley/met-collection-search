@@ -46,6 +46,7 @@ const showOnlyOptions = [
 	{
 		value: "NEprovenance",
 		name: "Nazi-era provenance",
+		icon: "i",
 		iconText: `Objects with changed or unknown ownership in continental Europe between 1933-1945.
 		<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/provenance-research-project">Learn more</a>`
 	}
@@ -67,12 +68,17 @@ const App = () => {
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
 	const [sortBy, setSortBy] = useState("Relevance");
+	const [facets, setFacets] = useState(defaultFacetObjectArray);
 	const [showOnly, setShowOnly] = useState({});
+
 	const [perPage, setPerPage] = useState(20);
 	const [offset, setOffset] = useState(0);
 	const [totalResults, setTotalResults] = useState(20001);
+
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
-	const [facets, setFacets] = useState(defaultFacetObjectArray);
+
+	const [darkMode, setDarkMode] = useState(false);
+	
 	const topRef = React.createRef();
 
 	const formatAndSetFacets = oldFacets => {
@@ -196,6 +202,7 @@ const App = () => {
 		const url = new URL(`${window.location}`);
 		const params = new URLSearchParams(url.search.slice(1));
 		setSearchParamsString(params.toString());
+		setDarkMode(params.get("darkmode"));
 	}, []);
 
 	useEffect(() => {
@@ -214,10 +221,17 @@ const App = () => {
 		setStateFromURLParams(params);
 	}, [searchParamsString]);
 
+	const mainClasses = () => {
+		const classArry = ["collection-search",
+			darkMode ? "darkmode" : "",
+			isSearching ? "is-searching" : ""];
+
+		return classArry.join(" ");
+	}
 	return (
 		<main
 			ref={topRef}
-			className={isSearching ? `is-searching collection-search` : `collection-search`}>
+			className={mainClasses()}>
 			<h1 className="cs__title">Search The Collection</h1>
 			<SearchBar
 				query={query}

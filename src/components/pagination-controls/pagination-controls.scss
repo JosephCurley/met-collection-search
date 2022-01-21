@@ -8,7 +8,7 @@
 
 .pagination-button {
 	@include button-reset();
-	border: 1px solid $color-black;
+	border: 1px solid currentColor;
 	height: $spacing-s;
 	width: $spacing-s;
 
