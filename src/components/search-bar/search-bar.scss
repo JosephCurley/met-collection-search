@@ -5,7 +5,7 @@
 	border: 2px solid currentColor;
 	border-radius: 50px;
 	box-sizing: border-box;
-	color: currentColor;
+	color: $color-black;
 	flex-basis: 100%;
 	min-width: 0;
 	padding: $spacing-micro;
@@ -13,6 +13,7 @@
 
 	&:focus {
 		background: $color-focus-background;
+		color: currentColor;
 		outline-color: $color-focus-state;
 	}
 
