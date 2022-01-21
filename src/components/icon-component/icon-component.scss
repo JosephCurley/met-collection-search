@@ -1,7 +1,7 @@
 .cs__icon-wrapper {
+	align-self: flex-start;
 	display: inline-flex;
-	position: relative;
-	transform: translate(4px, -4px);
+	margin-left: 4px;
 }
 
 .cs__icon {
@@ -28,9 +28,13 @@
 	display: none;
 	height: auto;
 	position: absolute;
-	right: calc(100% - 50px);
+	right: calc(50%);
+	transform: translateX(50%);
 	white-space: normal;
-	width: 250px;
+	width: 200px;
+	@media (min-width: 800px) {
+		width: 250px;
+	}
 
 	.cs__icon-wrapper:focus-within &,
 	.cs__icon-wrapper:hover &,
