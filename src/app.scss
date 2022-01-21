@@ -68,17 +68,12 @@ h4 {
 
 .collection-search {
 	@include typography-body-long();
-	letter-spacing: -0.05em;
 	max-width: 100%;
 	padding: $spacing-xs $spacing-component-margin;
 
 	&.darkmode {
 		background-color: $color-grey-900;
 		color: $color-white;
-	}
-
-	&.fonts-loaded {
-		letter-spacing: normal;
 	}
 }
 
