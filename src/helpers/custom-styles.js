@@ -23,6 +23,9 @@ const customStyles = {
 	multiValue: provided => ({
 		...provided,
 		backgroundColor: grey100,
+		".option-count": {
+			display: "none"
+		}
 	}),
 	multiValueRemove: provided => ({
 		...provided,

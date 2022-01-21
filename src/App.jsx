@@ -3,24 +3,13 @@ import Select from 'react-select';
 import SearchBar from './components/search-bar';
 import ResultObject from './components/result-object';
 import PaginationControls from './components/pagination-controls';
+import IconComponent from './components/icon-component';
 import customStyles from './helpers/custom-styles'
 import './app.scss';
 
 const searchAPI = 'https://www.metmuseum.org/mothra/collectionlisting/search?';
 
-const defaultParams = new URLSearchParams({
-	"offset": 0,
-	"pageSize": 0,
-	"perPage": 20,
-	"searchField": "All",
-	"showOnly": null,
-	"sortBy": "Relevance"
-});
-
-const defaultParamString = defaultParams.toString();
-
 const defaultFacetObjectArray = [];
-
 for (let i = 0; i < 4; i++) {
 	defaultFacetObjectArray.push({id: `dfa-${i}`,"options":[]});
 }
@@ -28,23 +17,39 @@ for (let i = 0; i < 4; i++) {
 const pageSizeOptions = [20,40,80];
 
 const sortByFields = [
-	{value: "Relevance", name: "Relevance", key: "Relevance"},
-	{value: "Title", name: "Title (a-z)", key: "Title"},
-	{value: "TitleDesc", name: "Title (z-a)", key: "TitleDesc"},
-	{value: "DateDesc", name: "Date (newest-oldest)", key: "DateDesc"},
-	{value: "Date", name: "Date (oldest-newest)", key: "Date"},
-	{value: "ArtistMaker", name: "Artist/Maker (a-z)", key: "ArtistMaker"},
-	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)", key: "ArtistMakerDesc"},
-	{value: "AccesionNumber", name: "Accession Number (0-9)", key: "AccesionNumber"},
-	{value: "AccesionNumberDesc", name: "Accession Number (9-0)", key: "AccesionNumberDesc"}
+	{value: "", name: "Relevance"},
+	{value: "Title", name: "Title (a-z)"},
+	{value: "TitleDesc", name: "Title (z-a)"},
+	{value: "DateDesc", name: "Date (newest-oldest)"},
+	{value: "Date", name: "Date (oldest-newest)"},
+	{value: "ArtistMaker", name: "Artist/Maker (a-z)"},
+	{value: "ArtistMakerDesc", name: "Artist/Maker (z-a)"},
+	{value: "AccesionNumber", name: "Accession Number (0-9)"},
+	{value: "AccesionNumberDesc", name: "Accession Number (9-0)"}
 ];
 
 const showOnlyOptions = [
-	{value: "highlights", name: "Highlights", key: "highlights"},
-	{value: "withImage", name: "Artworks With Image", key: "withImage"},
-	{value: "onDisplay", name: "Artworks on Display", key: "onDisplay"},
-	{value: "openAccess", name: "Open Access", key: "openAccess"},
-	{value: "provenance", name: "Nazi-era provenance", key: "provenance"}
+	{value: "highlights", name: "Highlights"},
+	{value: "withImage", name: "Artworks With Image"},
+	{value: "onDisplay", name: "Artworks on Display"},
+	{
+		value: "openAccess",
+		name: "Open Access",
+		icon: "i",
+		iconText: `<div>As part of the Met's
+			<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/open-access">Open Access policy</a>,
+			you can freely copy, modify and distribute this image, even for commercial purposes.
+		</div>
+		<em>API</em>Public domain data for this object can also be accessed using the Met's
+		<a target="_new" href="https://metmuseum.github.io/">Open Access API</a>`
+	},
+	{
+		value: "NEprovenance",
+		name: "Nazi-era provenance",
+		icon: "i",
+		iconText: `Objects with changed or unknown ownership in continental Europe between 1933-1945.
+		<a href="https://www.metmuseum.org/about-the-met/policies-and-documents/provenance-research-project">Learn more</a>`
+	}
 ];
 
 const placeholderCollectionItem = {
@@ -57,18 +62,23 @@ const placeholderCollectionItem = {
 let abortController = null;
 
 const App = () => {
-	const [searchParamsString, setSearchParamsString] = useState(defaultParamString);
+	const [searchParamsString, setSearchParamsString] = useState("");
 	const [isSearching, setIsSearching] = useState(false);
 
 	const [query, setQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
 	const [sortBy, setSortBy] = useState("Relevance");
+	const [facets, setFacets] = useState(defaultFacetObjectArray);
 	const [showOnly, setShowOnly] = useState({});
+
 	const [perPage, setPerPage] = useState(20);
 	const [offset, setOffset] = useState(0);
-	const [totalResults, setTotalResults] = useState(100);
+	const [totalResults, setTotalResults] = useState(20001);
+
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
-	const [facets, setFacets] = useState(defaultFacetObjectArray);
+
+	const [darkMode, setDarkMode] = useState(false);
+
 	const topRef = React.createRef();
 
 	const formatAndSetFacets = oldFacets => {
@@ -79,7 +89,7 @@ const App = () => {
 			facet.values.forEach(option => {
 				const formattedOption = {
 					"selected": option.selected,
-					"label": `${option.label} (${option.count})`,
+					"label": <span dangerouslySetInnerHTML={{ __html: `${option.label} <span class="option-count">(${option.count})</span>` }} />,
 					"value": option.id
 				};
 				option.selected && facet.selectedValues.push(formattedOption);
@@ -145,7 +155,6 @@ const App = () => {
 		} else {
 			delete newShowOnly[name];
 		}
-
 		const showOnlyString = Object.keys(newShowOnly).join("|");
 		const paramsObject = new URLSearchParams(searchParamsString);
 		paramsObject.set("offset", 0);
@@ -176,7 +185,7 @@ const App = () => {
 		setSortBy(params.get("sortBy") || "Relevance");
 		setPerPage(parseInt(params.get("perPage")) || 20);
 		setOffset(parseInt(params.get("offset")) || 0);
-		if (params.get("showOnly")) {
+		if (params.get("showOnly") !== "null" && params.get("showOnly")) {
 			const showOnlyObj = params.get("showOnly").split("|").reduce((o, key) => ({ ...o, [key]: true}), {})
 			setShowOnly(showOnlyObj);
 		}
@@ -193,22 +202,37 @@ const App = () => {
 		const url = new URL(`${window.location}`);
 		const params = new URLSearchParams(url.search.slice(1));
 		setSearchParamsString(params.toString());
-
-		setStateFromURLParams(params);
+		setDarkMode(params.get("darkmode"));
 	}, []);
 
 	useEffect(() => {
 		searchCollection();
 		const params = new URLSearchParams(searchParamsString);
+		params["offset"] === "0" && params.delete("offset");
+		[...params.entries()].forEach(([key, value]) => {
+			if (key === "offset" && value === "0") {
+				params.delete(key);
+			}
+			if (!value) {
+				params.delete(key);
+			}
+		});
 		window.history.replaceState({}, '', `${location.pathname}?${params}`);
 		setStateFromURLParams(params);
 	}, [searchParamsString]);
 
+	const mainClasses = () => {
+		const classArry = ["collection-search",
+			darkMode ? "darkmode" : "",
+			isSearching ? "is-searching" : ""];
+
+		return classArry.join(" ");
+	}
 	return (
 		<main
 			ref={topRef}
-			className={isSearching ? `is-searching collection-search` : `collection-search`}>
-			<h1>Search The Collection</h1>
+			className={mainClasses()}>
+			<h1 className="cs__title">Search The Collection</h1>
 			<SearchBar
 				query={query}
 				selectedField={searchField}
@@ -261,13 +285,16 @@ const App = () => {
 								<label htmlFor={option.value}>
 									{option.name}
 								</label>
+								{option.icon && <IconComponent icon={option.icon} text={option.iconText}/>}
 							</li>
 						)
 					})}
 				</ul>
 			</section>
 			<section className="cs__sort-results">
-				<div className="cs__total-results">Showing {totalResults.toLocaleString()} total results</div>
+				<div className="cs__total-results">
+					Showing {totalResults > 20000 ? "tens of thousands of" : totalResults.toLocaleString()} results
+				</div>
 				<div className="cs__sort-control">
 					<span className="cs__section-title">Sort By:</span>
 					<div className="cs-select__wrapper">
@@ -290,10 +317,10 @@ const App = () => {
 			</section>
 			{results.length > 0 ? (
 				<section className="cs__results">
-					{results.map(collectionItem => {
+					{results.map((collectionItem,i) => {
 						return (
 							<ResultObject
-								key={collectionItem.accessionNumber}
+								key={collectionItem.accessionNumber || `dummyItem-${i}`}
 								collectionItem={collectionItem}
 							/>
 						);

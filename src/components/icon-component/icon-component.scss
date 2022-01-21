@@ -1,0 +1,74 @@
+.cs__icon-wrapper {
+	display: inline-flex;
+	position: relative;
+	transform: translate(4px, -4px);
+}
+
+.cs__icon {
+	border: 1px solid currentColor;
+	border-radius: 100%;
+	display: inline-flex;
+	display: inline-block;
+	font-size: $textsize-xs;
+	height: $textsize-xs;
+	justify-content: center;
+	line-height: 1em;
+	text-align: center;
+	width: $textsize-xs;
+
+	.cs__icon-wrapper:focus-within &,
+	.cs__icon-wrapper:hover &,
+	.cs__icon-wrapper:focus & {
+		background-color: $color-focus-background;
+	}
+}
+
+.cs__icon-modal {
+	bottom: calc(100% - 4px);
+	display: none;
+	height: auto;
+	position: absolute;
+	right: calc(100% - 50px);
+	white-space: normal;
+	width: 250px;
+
+	.cs__icon-wrapper:focus-within &,
+	.cs__icon-wrapper:hover &,
+	.cs__icon-wrapper:focus & {
+		display: block;
+	}
+}
+
+.cs__icon-text {
+	background: $color-white;
+	border: 1px solid currentColor;
+	box-shadow: $shadow-passive;
+	cursor: text;
+	font-size: $textsize-xs;
+	line-height: 1.1;
+	margin: $spacing-micro;
+	padding: $spacing-micro;
+
+	.darkmode & {
+		background-color: $color-grey-900;
+	}
+
+	a {
+		margin-left: 2px;
+		white-space: nowrap;
+
+		&:hover { /* stylelint-disable-line */
+			text-decoration: none;
+		}
+	}
+
+	div {
+		margin-bottom: $spacing-xs;
+	}
+
+	em {
+		display: block;
+		font-style: normal;
+		font-weight: 600;
+	}
+}
