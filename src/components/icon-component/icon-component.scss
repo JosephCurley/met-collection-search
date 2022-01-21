@@ -24,7 +24,7 @@
 }
 
 .cs__icon-modal {
-	bottom: calc(100% - 4px);
+	top: calc(100% - 4px);
 	display: none;
 	height: auto;
 	position: absolute;
@@ -32,6 +32,7 @@
 	transform: translateX(50%);
 	white-space: normal;
 	width: 200px;
+	z-index: 99;
 	@media (min-width: 800px) {
 		width: 250px;
 	}
