@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PaginationControls = ({offset, handlePaginationChange, perPage, totalResults}) => {
-	const currentPage = Math.floor(offset/perPage);
+const PaginationControls = ({offset, handlePaginationChange, perPage, totalResults, query}) => {
+	const currentPage = Math.floor(offset/perPage) + 1;
 	const lastPage = Math.ceil(totalResults/perPage);
 
 	const backButton = (
 		<button
+			disabled={currentPage === 1}
 			aria-label="Previous Page"
 			value={-perPage}
 			className="pagination-button pagination-button--back"
@@ -18,6 +19,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 
 	const forwardButton = (
 		<button
+			disabled={offset + perPage > totalResults}
 			aria-label="Next Page"
 			value={perPage}
 			className="pagination-button pagination-button--forward"
@@ -29,6 +31,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 
 	const firstButton = (
 		<button
+			disabled={currentPage === 1}
 			aria-label="First Page"
 			value={-perPage * currentPage}
 			className="pagination-button pagination-button--first"
@@ -40,37 +43,31 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 
 	const lastButton = (
 		<button
+			disabled={offset + perPage > totalResults}
 			aria-label="Last Page"
 			value={perPage * (lastPage - currentPage)}
 			className="pagination-button pagination-button--last"
 			onClick={handlePaginationChange}
 			onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
-			{lastPage}
+			{lastPage.toLocaleString()}
 		</button>
 	);
 
 	const currentButton = (
-		<button
+		<div
 			key={currentPage}
-			disabled
-			className="pagination-button">
-			{currentPage}
-		</button>
+			className="cs__current-page">
+			{currentPage.toLocaleString()}
+		</div>
 	);
-
-	// const maxPages = (totalPages, currentPage, numberOfButtons) => {
-	// 	return Math.min(totalPages, currentPage + numberOfButtons);
-	// };
-
-
 
 	return (
 		<div className="cs__page-controls">
-			{offset > 0 ? firstButton : <div className="button-spacer button-spacer--wide"/>}
-			{offset > 0 ? backButton : <div className="button-spacer"/>}
+			{firstButton}
+			{backButton}
 			{currentButton}
-			{offset + perPage < totalResults ? forwardButton : <div className="button-spacer"/>}
-			{offset + perPage < totalResults ? lastButton : <div className="button-spacer button-spacer--wide"/>}
+			{forwardButton}
+			{ query ? lastButton : <div className="button-spacer button-spacer--wide"/>}
 		</div>
 	)
 };
@@ -79,7 +76,8 @@ PaginationControls.propTypes = {
 	offset: PropTypes.number,
 	handlePaginationChange: PropTypes.func,
 	perPage: PropTypes.number,
-	totalResults: PropTypes.number
+	totalResults: PropTypes.number,
+	query: PropTypes.string
 };
 
 export default PaginationControls;
