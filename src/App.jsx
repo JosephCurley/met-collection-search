@@ -74,7 +74,7 @@ const App = () => {
 	const [perPage, setPerPage] = useState(20);
 	const [offset, setOffset] = useState(0);
 	const [totalResults, setTotalResults] = useState(0);
-
+	const [totalCollectionResults, setTotalCollectionResults] = useState(495487);
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
 
 	const [darkMode, setDarkMode] = useState(false);
@@ -111,6 +111,7 @@ const App = () => {
 			setResults(response.results);
 			formatAndSetFacets(response.facets);
 			setTotalResults(response.totalResults);
+			setTotalCollectionResults(response.totalCollectionResults);
 		} else {
 			console.log("No Results");
 		}
@@ -293,7 +294,7 @@ const App = () => {
 			</section>
 			<section className="cs__sort-results">
 				<div className="cs__total-results">
-					Showing {query === "" ? "hundreds of thousands of" : totalResults.toLocaleString()} results
+					Showing {totalResults < totalCollectionResults ? totalResults.toLocaleString() : "hundreds of thousands of" } results
 				</div>
 				<div className="cs__sort-control">
 					<span className="cs__section-title">Sort By:</span>
@@ -335,7 +336,7 @@ const App = () => {
 					offset={offset}
 					handlePaginationChange={handlePaginationChange}
 					perPage={perPage}
-					query={query}
+					totalCollectionResults={totalCollectionResults}
 					totalResults={totalResults}
 				/>
 				<div className="cs__rpp">

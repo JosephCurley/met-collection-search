@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const PaginationControls = ({offset, handlePaginationChange, perPage, totalResults, query}) => {
+const PaginationControls = ({offset, handlePaginationChange, perPage, totalResults, totalCollectionResults}) => {
 	const currentPage = Math.floor(offset/perPage) + 1;
 	const lastPage = Math.ceil(totalResults/perPage);
 
@@ -67,7 +67,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 			{backButton}
 			{currentButton}
 			{forwardButton}
-			{ query ? lastButton : <div className="button-spacer button-spacer--wide"/>}
+			{ totalResults < totalCollectionResults ? lastButton : <div className="button-spacer button-spacer--wide"/>}
 		</div>
 	)
 };
@@ -77,7 +77,7 @@ PaginationControls.propTypes = {
 	handlePaginationChange: PropTypes.func,
 	perPage: PropTypes.number,
 	totalResults: PropTypes.number,
-	query: PropTypes.string
+	totalCollectionResults: PropTypes.number
 };
 
 export default PaginationControls;
