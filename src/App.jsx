@@ -89,7 +89,7 @@ const App = () => {
 			facet.values.forEach(option => {
 				const formattedOption = {
 					"selected": option.selected,
-					"label": `${option.label} (${option.count})`,
+					"label": <span dangerouslySetInnerHTML={{ __html: `${option.label} <span class="option-count">(${option.count})</span>` }} />,
 					"value": option.id
 				};
 				option.selected && facet.selectedValues.push(formattedOption);
