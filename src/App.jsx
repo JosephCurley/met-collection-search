@@ -238,6 +238,28 @@ const App = () => {
 				selectedField={searchField}
 				onChange={handleSearchQueryChange}
 			/>
+			<section className="cs__show-only">
+				<span className="cs__section-title">Show Only:</span>
+				<ul className="cs__show-wrapper">
+					{showOnlyOptions.map(option => {
+						return (
+							<li key={option.value} className="cs__show-option">
+								<input
+									checked={Object.keys(showOnly).includes(option.value)}
+									name={option.value}
+									onChange={handleShowOnlyChange}
+									type="checkbox"
+									id={option.value}
+								/>
+								<label htmlFor={option.value}>
+									{option.name}
+								</label>
+								{option.icon && <IconComponent icon={option.icon} text={option.iconText}/>}
+							</li>
+						)
+					})}
+				</ul>
+			</section>
 			<section className="cs__facets">
 				<span className="cs__section-title">Filter By:</span>
 				<div className="cs__facet-wrapper">
@@ -267,29 +289,6 @@ const App = () => {
 						);
 					})}
 				</div>
-			</section>
-
-			<section className="cs__show-only">
-				<span className="cs__section-title">Show Only:</span>
-				<ul className="cs__show-wrapper">
-					{showOnlyOptions.map(option => {
-						return (
-							<li key={option.value} className="cs__show-option">
-								<input
-									checked={Object.keys(showOnly).includes(option.value)}
-									name={option.value}
-									onChange={handleShowOnlyChange}
-									type="checkbox"
-									id={option.value}
-								/>
-								<label htmlFor={option.value}>
-									{option.name}
-								</label>
-								{option.icon && <IconComponent icon={option.icon} text={option.iconText}/>}
-							</li>
-						)
-					})}
-				</ul>
 			</section>
 			<section className="cs__sort-results">
 				<div className="cs__total-results">

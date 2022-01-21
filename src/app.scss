@@ -199,10 +199,14 @@ h4 {
 	font-size: $textsize-xxs;
 }
 
-.cs__show-only {
+.cs__facets {
 	border-bottom: 1px solid $color-grey-600;
 	margin-bottom: $spacing-xxs;
 	padding-bottom: $spacing-xxs;
+}
+
+.cs__show-only {
+	margin-bottom: $spacing-xxs;
 }
 
 .cs__show-wrapper {
