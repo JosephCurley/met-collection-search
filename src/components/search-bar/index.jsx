@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { DebounceInput } from 'react-debounce-input';
 
 const searchFields = [
-	{value: "All", name: "All Fields"},
+	{value: "", name: "All Fields"},
 	{value: "ArtistCulture", name: "Artist / Culture"},
 	{value: "Title", name: "Title"},
 	{value: "Description", name: "Description"},
@@ -18,7 +18,7 @@ const SearchBar = ({onChange, query, selectedField}) => {
 
 	let placeholderText = "Search";
 
-	if (!activeField || selectedField === "All") {
+	if (!activeField || selectedField === "") {
 		placeholderText = "Search for Artist, Culture, Title, Accession #, Gallery, etc.";
 	} else {
 		placeholderText = `Search by ${activeField.name}`;

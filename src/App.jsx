@@ -17,7 +17,7 @@ for (let i = 0; i < 4; i++) {
 const pageSizeOptions = [20,40,80];
 
 const sortByFields = [
-	{value: "Relevance", name: "Relevance"},
+	{value: "", name: "Relevance"},
 	{value: "Title", name: "Title (a-z)"},
 	{value: "TitleDesc", name: "Title (z-a)"},
 	{value: "DateDesc", name: "Date (newest-oldest)"},
