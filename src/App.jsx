@@ -78,7 +78,8 @@ const App = () => {
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
 
 	const [darkMode, setDarkMode] = useState(false);
-	
+	const [fontsLoaded, setFontsLoaded] = useState(false);
+
 	const topRef = React.createRef();
 
 	const formatAndSetFacets = oldFacets => {
@@ -203,6 +204,7 @@ const App = () => {
 		const params = new URLSearchParams(url.search.slice(1));
 		setSearchParamsString(params.toString());
 		setDarkMode(params.get("darkmode"));
+		window.addEventListener('load', setFontsLoaded(true));
 	}, []);
 
 	useEffect(() => {
@@ -223,6 +225,7 @@ const App = () => {
 
 	const mainClasses = () => {
 		const classArry = ["collection-search",
+			fontsLoaded ? "fonts-loaded" : "",
 			darkMode ? "darkmode" : "",
 			isSearching ? "is-searching" : ""];
 
