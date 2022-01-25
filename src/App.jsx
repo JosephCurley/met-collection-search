@@ -164,7 +164,7 @@ const App = () => {
 
 	const scrollToRef = (ref, behaviorType="smooth")=> {
 		document.activeElement.blur();
-		
+
 		ref.current.scrollIntoView({
 			block: 'start',
 			behavior: behaviorType
@@ -265,7 +265,7 @@ const App = () => {
 				</div>
 			</section>
 
-			<section className="cs__show-only">
+			<section className="cs__show-only" ref={resultsRef}>
 				<span className="cs__section-title">Show Only:</span>
 				<ul className="cs__show-wrapper">
 					{showOnlyOptions.map(option => {
@@ -288,7 +288,7 @@ const App = () => {
 					})}
 				</ul>
 			</section>
-			<section className="cs__sort-results" ref={resultsRef}>
+			<section className="cs__sort-results">
 				<div className="cs__total-results">
 					Showing {totalResults > 20000 ? "tens of thousands of" : totalResults.toLocaleString()} results
 				</div>
