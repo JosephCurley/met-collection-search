@@ -113,9 +113,9 @@ h4 {
 	}
 
 	&::after {
-		align-items: center;
+		align-items: end;
 		bottom: 0;
-		content: "\2228";
+		content: url("https://icons.getbootstrap.com/assets/icons/chevron-down.svg"); //Obviously dont go to prod with this
 		display: flex;
 		font-size: $textsize-xs;
 		pointer-events: none;
