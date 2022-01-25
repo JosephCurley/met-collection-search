@@ -64,6 +64,7 @@ const App = () => {
 	const [isSearching, setIsSearching] = useState(false);
 
 	const [query, setQuery] = useState("");
+	const [currentQuery, setCurrentQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
 	const [sortBy, setSortBy] = useState("Relevance");
 	const [facets, setFacets] = useState(defaultFacetObjectArray);
@@ -113,6 +114,7 @@ const App = () => {
 		} else {
 			console.log("No Results");
 		}
+		setCurrentQuery(new URLSearchParams(searchParamsString).get("q"));
 	};
 
 	const searchCollection = async () => {
@@ -229,7 +231,7 @@ const App = () => {
 			<h1 className="cs__title">Search The Collection</h1>
 			<div className="cs__total-results">
 				{totalResults > 20000 ? "Showing tens of thousands of" : totalResults.toLocaleString()} results
-				{(totalResults <  20000 && query) ? ` for ${query}` : ""}
+				{(totalResults <  20000 && currentQuery) ? ` for ${currentQuery}` : ""}
 			</div>
 			<SearchBar
 				query={query}
