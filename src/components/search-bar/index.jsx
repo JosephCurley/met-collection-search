@@ -10,7 +10,7 @@ const searchFields = [
 	{value: "AccesionNum", name: "Accesion Number"}
 ];
 
-const SearchBar = ({onChange, query, selectedField}) => {
+const SearchBar = ({onChange, query, selectedField, scrollToRef, resultsRef}) => {
 
 	const activeField = searchFields.find(searchField => {
 		return searchField.value === selectedField;
@@ -33,6 +33,7 @@ const SearchBar = ({onChange, query, selectedField}) => {
 				debounceTimeout={400}
 				type="search"
 				value={query}
+				onKeyDown={event => event.key === 'Enter' && scrollToRef(resultsRef)}
 				onChange={event => onChange("q", event)}
 			/>
 			<div className="search-type__wrapper cs-select__wrapper">
@@ -62,6 +63,8 @@ const SearchBar = ({onChange, query, selectedField}) => {
 SearchBar.propTypes = {
 	selectedField: PropTypes.string,
 	query: PropTypes.string,
+	scrollToRef: PropTypes.func,
+	resultsRef: PropTypes.object,
 	onChange: PropTypes.func
 }
 
