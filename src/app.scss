@@ -113,7 +113,7 @@ h4 {
 	}
 
 	&::after {
-		align-items: end;
+		align-items: center;
 		bottom: 0;
 		content: url("https://icons.getbootstrap.com/assets/icons/chevron-down.svg"); //Obviously dont go to prod with this
 		display: flex;
@@ -121,7 +121,7 @@ h4 {
 		pointer-events: none;
 		position: absolute;
 		right: 8px;
-		top: 0;
+		top: 8px;
 	}
 }
 
@@ -133,7 +133,7 @@ h4 {
 	cursor: pointer;
 	font-weight: 600;
 	height: 100%;
-	padding: $spacing-micro;
+	padding: $spacing-micro $spacing-xxs $spacing-micro $spacing-micro;
 	text-overflow: ellipsis;
 	width: 100%;
 
