@@ -1,5 +1,4 @@
 .cs__icon-wrapper {
-	align-self: flex-start;
 	display: inline-flex;
 	margin-left: 4px;
 }
@@ -45,13 +44,24 @@
 
 .cs__icon-text {
 	background: $color-white;
-	border: 1px solid currentColor;
-	box-shadow: $shadow-passive;
+	border-radius: 4px;
+	box-shadow: $shadow-active;
 	cursor: text;
 	font-size: $textsize-xs;
 	line-height: 1.1;
 	margin: $spacing-micro;
 	padding: $spacing-micro;
+
+	&::after {
+		background: $color-white;
+		bottom: 0;
+		content: " ";
+		height: 1em;
+		left: 50%;
+		position: absolute;
+		transform: rotate(45deg) translateX(-50%);
+		width: 1em;
+	}
 
 	.darkmode & {
 		background-color: $color-grey-900;

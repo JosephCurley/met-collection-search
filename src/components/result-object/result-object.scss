@@ -7,7 +7,7 @@
 
 	&:hover,
 	&:focus {
-		background-color: $color-focus-background;
+		background-color: $color-grey-200;
 		outline: 0;
 	}
 }
@@ -17,7 +17,7 @@
 	display: flex;
 	height: 300px;
 	justify-content: center;
-	margin-bottom: $spacing-micro;
+	margin-bottom: $spacing-xxs;
 	max-width: 100%;
 	position: relative;
 }
@@ -39,8 +39,8 @@
 	@include typography-h5();
 	@include line-clamp(2);
 	display: -webkit-box; /* stylelint-disable-line */
-	height: 2.2em;
 	line-height: 1.1;
+	max-height: 2.2em;
 	overflow: hidden;
 
 	.result-object:focus &,
@@ -52,6 +52,7 @@
 .result-object__attribution {
 	@include line-clamp(2);
 	display: -webkit-box; /* stylelint-disable-line */
+	font-size: $textsize-xs;
 	height: 2em;
 	line-height: 1;
 	overflow: hidden;

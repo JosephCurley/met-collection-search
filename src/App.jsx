@@ -14,8 +14,6 @@ for (let i = 0; i < 4; i++) {
 	defaultFacetObjectArray.push({id: `dfa-${i}`,"options":[]});
 }
 
-const pageSizeOptions = [20,40,80];
-
 const sortByFields = [
 	{value: "", name: "Relevance"},
 	{value: "Title", name: "Title (a-z)"},
@@ -71,7 +69,7 @@ const App = () => {
 	const [facets, setFacets] = useState(defaultFacetObjectArray);
 	const [showOnly, setShowOnly] = useState({});
 
-	const [perPage, setPerPage] = useState(20);
+	const [perPage] = useState(80);
 	const [offset, setOffset] = useState(0);
 	const [totalResults, setTotalResults] = useState(20001);
 
@@ -105,7 +103,7 @@ const App = () => {
 		setIsSearching(true);
 		abortController && abortController.abort();
 		abortController = new AbortController();
-		const request = await fetch(`${searchAPI}${searchParamsString}`, { signal: abortController.signal });
+		const request = await fetch(`${searchAPI}${searchParamsString}&perPage=80`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.results) {
 			setResults(response.results);
@@ -163,7 +161,15 @@ const App = () => {
 		setSearchParamsString(paramsObject.toString());
 	};
 
+	const scrollToRef = (ref, behaviorType="smooth")=> {
+		ref.current.scrollIntoView({
+			block: 'start',
+			behavior: behaviorType
+		});
+	};
+
 	const handlePaginationChange = e => {
+		scrollToRef(topRef, "auto");
 		const paramsObject = new URLSearchParams(searchParamsString);
 		const newOffset = Math.max(0, parseInt(e.target.value) + parseInt(offset));
 
@@ -172,30 +178,15 @@ const App = () => {
 		setOffset(newOffset);
 	};
 
-	const handlePerPageChange = event => {
-		const paramsObject = new URLSearchParams(searchParamsString);
-		paramsObject.set("perPage", event.target.value);
-		setSearchParamsString(paramsObject.toString());
-		setPerPage(event.target.value);
-	};
-
 	const setStateFromURLParams = params => {
 		setQuery(params.get("q") || "");
 		setSearchField(params.get("searchField") || "");
 		setSortBy(params.get("sortBy") || "Relevance");
-		setPerPage(parseInt(params.get("perPage")) || 20);
 		setOffset(parseInt(params.get("offset")) || 0);
 		if (params.get("showOnly") !== "null" && params.get("showOnly")) {
 			const showOnlyObj = params.get("showOnly").split("|").reduce((o, key) => ({ ...o, [key]: true}), {})
 			setShowOnly(showOnlyObj);
 		}
-	};
-
-	const scrollToRef = ref => {
-		ref.current.scrollIntoView({
-			block: 'start',
-			behavior: 'smooth'
-		});
 	};
 
 	useEffect(() => {
@@ -278,6 +269,7 @@ const App = () => {
 								<input
 									checked={Object.keys(showOnly).includes(option.value)}
 									name={option.value}
+									className="cs__show-checkbox"
 									onChange={handleShowOnlyChange}
 									type="checkbox"
 									id={option.value}
@@ -337,26 +329,10 @@ const App = () => {
 					perPage={perPage}
 					totalResults={totalResults}
 				/>
-				<div className="cs__rpp">
-					<span>Results per page:</span>
-					{pageSizeOptions.map(value => {
-						return (
-							<button
-								disabled={perPage === value}
-								value={value}
-								onKeyDown={event => event.key === 'Enter' && handlePerPageChange(event)}
-								onClick={event => handlePerPageChange(event)}
-								key={value}
-								className="rpp__option">
-								{value}
-							</button>
-						)
-					})}
-				</div>
 				<div className="rtt__wrapper">
 					<button
 						onKeyDown={event => event.key === 'Enter' && scrollToRef(topRef)}
-						onClick={() => scrollToRef(topRef)}
+						onClick={() => scrollToRef(topRef, "smooth")}
 						className="cs__rtt-button">
 						Return To Top
 					</button>

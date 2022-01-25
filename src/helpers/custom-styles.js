@@ -2,7 +2,7 @@ const focusBackgroundColor = `rgba(93, 16, 73, 0.1)`;
 const focusColor = `rgba(93, 16, 73, 1)`;
 const grey100 = `#f0f0f0`;
 const grey200 = `#e3e3e3`;
-// const grey700 = `#64696b`;
+const grey700 = `#64696b`;
 
 const customStyles = {
 	control: (provided, state) => ({
@@ -20,6 +20,10 @@ const customStyles = {
 		backgroundColor: state.isFocused ? focusBackgroundColor : "transparent"
 	}),
 
+	placeholder: provided => ({
+		...provided,
+		color: grey700
+	}),
 	multiValue: provided => ({
 		...provided,
 		backgroundColor: grey100,

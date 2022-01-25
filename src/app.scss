@@ -5,7 +5,7 @@
 @import "./components/search-bar/search-bar";
 @import "./components/pagination-controls/pagination-controls";
 @import "./components/icon-component/icon-component";
-$bp-small-screen: 800px;
+$bp-small-screen: 900px;
 
 * {
 	box-sizing: border-box;
@@ -105,10 +105,23 @@ h4 {
 	border: 2px solid currentColor;
 	border-radius: 50px;
 	padding-right: $spacing-micro;
+	position: relative;
 
 	&:focus-within {
 		background-color: $color-focus-background;
 		border-color: $color-focus-state;
+	}
+
+	&::after {
+		align-items: center;
+		bottom: 0;
+		content: "\2228";
+		display: flex;
+		font-size: $textsize-xs;
+		pointer-events: none;
+		position: absolute;
+		right: 8px;
+		top: 0;
 	}
 }
 
@@ -191,7 +204,7 @@ h4 {
 	flex-grow: 1;
 	flex-shrink: 0;
 	@media (min-width: $bp-small-screen) {
-		flex-basis: 40%;
+		flex-basis: 20%;
 	}
 }
 
@@ -216,11 +229,15 @@ h4 {
 }
 
 .cs__show-option {
-	align-items: center;
+	align-items: baseline;
 	cursor: pointer;
 	display: flex;
 	position: relative;
 	white-space: nowrap;
+}
+
+.cs__show-checkbox {
+	margin-right: 5px;
 }
 
 .hidden-input {

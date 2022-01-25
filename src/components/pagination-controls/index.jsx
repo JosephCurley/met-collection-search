@@ -9,7 +9,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 			className="pagination-button pagination-button--back"
 			onClick={handlePaginationChange}
 			onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
-			&ndash;
+			{`<`}
 		</button>
 	);
 
@@ -20,7 +20,7 @@ const PaginationControls = ({offset, handlePaginationChange, perPage, totalResul
 			className="pagination-button pagination-button--forward"
 			onClick={handlePaginationChange}
 			onKeyDown={event => event.key === 'Enter' && handlePaginationChange(event)}>
-			+
+			{`>`}
 		</button>
 	);
 
