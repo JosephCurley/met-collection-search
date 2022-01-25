@@ -227,6 +227,10 @@ const App = () => {
 			ref={topRef}
 			className={mainClasses()}>
 			<h1 className="cs__title">Search The Collection</h1>
+			<div className="cs__total-results">
+				{totalResults > 20000 ? "Showing tens of thousands of" : totalResults.toLocaleString()} results
+				{(totalResults <  20000 && query) ? ` for ${query}` : ""}
+			</div>
 			<SearchBar
 				query={query}
 				selectedField={searchField}
@@ -289,9 +293,6 @@ const App = () => {
 				</ul>
 			</section>
 			<section className="cs__sort-results">
-				<div className="cs__total-results">
-					Showing {totalResults > 20000 ? "tens of thousands of" : totalResults.toLocaleString()} results
-				</div>
 				<div className="cs__sort-control">
 					<span className="cs__section-title">Sort By:</span>
 					<div className="cs-select__wrapper">
