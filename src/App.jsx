@@ -165,8 +165,6 @@ const App = () => {
 	};
 
 	const scrollToRef = (ref, behaviorType="smooth")=> {
-		document.activeElement.blur();
-
 		ref.current.scrollIntoView({
 			block: 'start',
 			behavior: behaviorType
@@ -236,8 +234,6 @@ const App = () => {
 			<SearchBar
 				query={query}
 				selectedField={searchField}
-				scrollToRef={scrollToRef}
-				resultsRef={resultsRef}
 				onChange={handleSearchQueryChange}
 			/>
 			<section className="cs__facets">
@@ -295,6 +291,15 @@ const App = () => {
 				</ul>
 			</section>
 			<section className="cs__sort-results">
+				<div className="cs__show-current">
+					{`Showing `}
+					{offset.toLocaleString()}
+					{` \u2013 `}
+					{(offset + perPage <= totalResults ? offset + perPage : totalResults).toLocaleString()}
+					{` of ` }
+					{totalResults > 20000 ? "tens of thousands" : totalResults.toLocaleString()}
+					{` results`}
+				</div>
 				<div className="cs__sort-control">
 					<span className="cs__section-title">Sort By:</span>
 					<div className="cs-select__wrapper">
