@@ -7,6 +7,7 @@ const searchFields = [
 	{value: "ArtistCulture", name: "Artist / Culture"},
 	{value: "Title", name: "Title"},
 	{value: "Description", name: "Description"},
+	{value: "Gallery", name: "Gallery"},
 	{value: "AccesionNum", name: "Accesion Number"}
 ];
 
