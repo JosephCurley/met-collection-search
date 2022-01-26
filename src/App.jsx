@@ -165,8 +165,6 @@ const App = () => {
 	};
 
 	const scrollToRef = (ref, behaviorType="smooth")=> {
-		document.activeElement.blur();
-
 		ref.current.scrollIntoView({
 			block: 'start',
 			behavior: behaviorType
@@ -236,8 +234,6 @@ const App = () => {
 			<SearchBar
 				query={query}
 				selectedField={searchField}
-				scrollToRef={scrollToRef}
-				resultsRef={resultsRef}
 				onChange={handleSearchQueryChange}
 			/>
 			<section className="cs__facets">
