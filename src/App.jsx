@@ -70,7 +70,7 @@ const App = () => {
 	const [facets, setFacets] = useState(defaultFacetObjectArray);
 	const [showOnly, setShowOnly] = useState({});
 
-	const [perPage] = useState(80);
+	const [perPage] = useState(40);
 	const [offset, setOffset] = useState(0);
 	const [totalResults, setTotalResults] = useState(20001);
 
@@ -105,7 +105,7 @@ const App = () => {
 		setIsSearching(true);
 		abortController && abortController.abort();
 		abortController = new AbortController();
-		const request = await fetch(`${searchAPI}${searchParamsString}&perPage=80`, { signal: abortController.signal });
+		const request = await fetch(`${searchAPI}${searchParamsString}&perPage=${perPage}`, { signal: abortController.signal });
 		const response = await request.json();
 		if (response.results) {
 			setResults(response.results);
