@@ -34,10 +34,10 @@ const SearchBar = ({onChange, query, selectedField}) => {
 				debounceTimeout={400}
 				type="search"
 				value={query}
-				autocomplete="off"
-				autocorrect="off"
-				autocapitalize="off"
-				spellcheck="false"
+				autoComplete="off"
+				autoCorrect="off"
+				autoCapitalize="off"
+				spellCheck="false"
 				onKeyDown={event => event.key === 'Enter' && document.activeElement.blur()}
 				onChange={event => onChange("q", event)}
 			/>
