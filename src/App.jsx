@@ -62,7 +62,7 @@ let abortController = null;
 const App = () => {
 	const [searchParamsString, setSearchParamsString] = useState("");
 	const [isSearching, setIsSearching] = useState(false);
-
+	const [hasSearched, setHasSearched] = useState(false);
 	const [query, setQuery] = useState("");
 	const [currentQuery, setCurrentQuery] = useState("");
 	const [searchField, setSearchField] = useState("");
@@ -115,6 +115,7 @@ const App = () => {
 			console.log("No Results");
 		}
 		setCurrentQuery(new URLSearchParams(searchParamsString).get("q"));
+		setHasSearched(true);
 	};
 
 	const searchCollection = async () => {
@@ -228,8 +229,12 @@ const App = () => {
 			className={mainClasses()}>
 			<h1 className="cs__title">Search The Collection</h1>
 			<div className="cs__total-results">
-				{totalResults > 20000 ? "Showing tens of thousands of" : totalResults.toLocaleString()} results
-				{(totalResults <  20000 && currentQuery) ? ` for ${currentQuery}` : ""}
+				{ hasSearched ? (
+					<span>
+						{totalResults > 20000 ? "Showing tens of thousands of" : totalResults.toLocaleString()} results
+						{(totalResults <  20000 && currentQuery) ? ` for ${currentQuery}` : ""}
+					</span>
+				) : ""}
 			</div>
 			<SearchBar
 				query={query}

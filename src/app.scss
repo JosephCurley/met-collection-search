@@ -143,8 +143,11 @@ h4 {
 }
 
 .cs__total-results {
+	font-size: $textsize-s;
 	font-weight: 600;
+	line-height: 1;
 	margin-bottom: $spacing-micro;
+	min-height: 1em;
 }
 
 .cs__sort-results {
