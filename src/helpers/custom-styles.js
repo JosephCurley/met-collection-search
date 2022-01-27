@@ -15,11 +15,6 @@ const customStyles = {
 			backgroundColor: focusBackgroundColor
 		}
 	}),
-	option: (provided, state) => ({
-		...provided,
-		backgroundColor: state.isFocused ? focusBackgroundColor : "transparent"
-	}),
-
 	placeholder: provided => ({
 		...provided,
 		color: grey700

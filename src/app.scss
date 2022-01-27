@@ -216,6 +216,17 @@ h4 {
 	font-size: $textsize-xxs;
 }
 
+.cs__facet-option {
+	background-color: transparent;
+	cursor: default;
+	padding: 6px $spacing-micro;
+
+	&:hover,
+	&:focus {
+		background-color: $color-focus-background;
+	}
+}
+
 .cs__show-only {
 	border-bottom: 1px solid $color-grey-600;
 	margin-bottom: $spacing-xxs;

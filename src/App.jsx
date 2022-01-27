@@ -4,9 +4,9 @@ import SearchBar from './components/search-bar';
 import ResultObject from './components/result-object';
 import PaginationControls from './components/pagination-controls';
 import IconComponent from './components/icon-component';
-import customStyles from './helpers/custom-styles'
+import SelectOption from './components/select-option';
+import customStyles from './helpers/custom-styles';
 import './app.scss';
-
 const searchAPI = 'https://www.metmuseum.org/mothra/collectionlisting/search?';
 
 const defaultFacetObjectArray = [];
@@ -89,7 +89,8 @@ const App = () => {
 			facet.values.forEach(option => {
 				const formattedOption = {
 					"selected": option.selected,
-					"label": <span dangerouslySetInnerHTML={{ __html: `${option.label} <span class="option-count">(${option.count})</span>` }} />,
+					"count": option.count,
+					"label": option.label,
 					"value": option.id
 				};
 				option.selected && facet.selectedValues.push(formattedOption);
@@ -138,6 +139,7 @@ const App = () => {
 	};
 
 	const handleFacetChange= (e, facet) => {
+		console.log(e.value);
 		const paramsObject = new URLSearchParams(searchParamsString);
 		const newValue = e.map(selectedFacet => selectedFacet.value).join("|")
 		paramsObject.set(facet.id, newValue);
@@ -223,6 +225,7 @@ const App = () => {
 
 		return classArry.join(" ");
 	}
+
 	return (
 		<main
 			ref={topRef}
@@ -258,11 +261,13 @@ const App = () => {
 									styles={customStyles}
 									defaultValue={facet.selectedValues}
 									className="cs__facet"
+									classNamePrefix="cs__facet"
 									isMulti
 									isSearchable="true"
 									inputId={facet.id}
 									name={facet.id}
 									placeholder={facet.label}
+									components={{Option: SelectOption}}
 									onChange={e => handleFacetChange(e,facet)}
 									options={facet.options}
 								/>
