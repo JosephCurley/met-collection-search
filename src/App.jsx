@@ -57,10 +57,15 @@ const placeholderCollectionItem = {
 	"data": ""
 }
 
+const url = new URL(`${window.location}`);
+const params = new URLSearchParams(url.search.slice(1));
+const initialParams = params.toString();
+const isDarkMode = params.get("darkmode");
+
 let abortController = null;
 
 const App = () => {
-	const [searchParamsString, setSearchParamsString] = useState("");
+	const [searchParamsString, setSearchParamsString] = useState(initialParams || "");
 	const [isSearching, setIsSearching] = useState(false);
 	const [hasSearched, setHasSearched] = useState(false);
 	const [query, setQuery] = useState("");
@@ -76,7 +81,7 @@ const App = () => {
 
 	const [results, setResults] = useState(Array(perPage).fill(placeholderCollectionItem));
 
-	const [darkMode, setDarkMode] = useState(false);
+	const [darkMode] = useState(isDarkMode);
 
 	const topRef = React.createRef();
 	const resultsRef = React.createRef();
@@ -194,13 +199,6 @@ const App = () => {
 			setShowOnly(showOnlyObj);
 		}
 	};
-
-	useEffect(() => {
-		const url = new URL(`${window.location}`);
-		const params = new URLSearchParams(url.search.slice(1));
-		setSearchParamsString(params.toString());
-		setDarkMode(params.get("darkmode"));
-	}, []);
 
 	useEffect(() => {
 		searchCollection();

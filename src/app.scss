@@ -221,6 +221,8 @@ h4 {
 	cursor: default;
 	padding: 6px $spacing-micro;
 
+	&.is-focused,
+	&:active,
 	&:hover,
 	&:focus {
 		background-color: $color-focus-background;
